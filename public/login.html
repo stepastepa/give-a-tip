@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+  <div id="logo">
+    <a href="/">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" >
+        <circle cx="12" cy="12" r="12" fill="currentColor"/>
+        <path d="M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="login-card">
+    <div class="tab-buttons">
+      <button id="login-tab" class="active">Sign in</button>
+      <button id="register-tab">Register</button>
+    </div>
+
+    <div id="loginContainer" class="tab-content active">
+      <form id="loginForm">
+        <label for="emailInput">
+          Email:
+          <input id="emailInput" type="text" name="email" required />
+        </label>
+        <label for="passwordInput">
+          Password:
+          <input id="passwordInput" type="password" name="password" required />
+        </label>
+        <button type="submit" class="btn">Sign in</button>
+      </form>
+      <div class="message" id="msgLog">123</div>
+    </div>
+
+    <div id="registerContainer" class="tab-content">
+      <form id="registerForm">
+        <label for="usernameInputReg">
+          Username:
+          <input id="usernameInputReg" type="text" name="username" required />
+        </label>
+        <label for="emailInputReg">
+          Email:
+          <input id="emailInputReg" type="text" name="email" required />
+        </label>
+        <label for="passwordInputReg">
+          Password:
+          <input id="passwordInputReg" type="password" name="password" required />
+        </label>
+        <button type="submit" class="btn">Register</button>
+      </form>
+      <div class="message" id="msgReg">message</div>
+    </div>
+  </div>
+
+  <script src="./login.js"></script>
+</body>
+</html>

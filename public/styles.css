@@ -1,0 +1,201 @@
+@import url(./styles/reset.css);
+@import url(./styles/ui.css);
+
+/* /////////////////////////////// */
+/* /////////////////////////////// */
+
+.wrapper {
+  display: grid;
+  grid-template-rows: 4fr 1fr;
+  grid-template-columns: 1fr min(600px, 100%) 1fr;
+
+  /* background: linear-gradient(to top, white, skyblue); */
+  background-color: var(--light-bg);
+  color: var(--dark-color);
+  height: 100dvh;
+}
+
+/* /////////////////////////////// */
+/* /////////////////////////////// */
+#logo {
+  z-index: 1;
+}
+
+.search-bar {
+  grid-row: 1;
+  grid-column: 2 / -2;
+  padding: 1rem;
+
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+
+  width: 100%;
+  z-index: 2;
+}
+
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* box-shadow: 0 16px 64px hsl(223deg 80% 40% / 0.05); */
+  box-shadow: 0 0 0 1px var(--light-border-color);
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+.search-bar .search-wrapper{
+  transform: translateY(calc(((80dvh / 2) - 1rem) - 50%));
+}
+.search-bar.active .search-wrapper{
+  transform: translateY(0);
+}
+
+.search-wrapper:has(input:focus),
+.search-bar.active .search-wrapper {
+  box-shadow: 0 0 0 1px var(--light-border-color-hover);
+}
+/* .search-bar.active.empty {
+  
+} */
+
+.result {
+  flex: 0 0 auto;
+  display: none;
+}
+.search-bar.active .result {
+  display: flex;
+  flex-direction: column;
+  /*
+  mask-image: linear-gradient(
+		to bottom,
+		transparent 0%,
+		black 1rem,
+		black calc(100% - 1rem),
+		transparent 100%
+	);
+  -webkit-mask-image: linear-gradient(
+		to bottom,
+		transparent 0%,
+		black 1rem,
+		black calc(100% - 1rem),
+		transparent 100%
+	);
+  */
+  /* отклюаем по дефолту маску на скролле, активируем позже как инлайн стиль через js, если скролл есть */
+  mask-image: none;
+  -webkit-mask-image: none;
+  transition: -webkit-mask-image 0.3s, mask-image 0.3s;  
+
+  padding: 0 1rem 1rem 1rem;
+  font-size: 1.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  animation: opening 0.3s ease-in-out forwards; /* надо проверять время обновления маски в start.js чтоб секунды были одинаковые */
+}
+@keyframes opening {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: calc(80dvh - 2rem - (1.5rem + 2rem));
+  }
+}
+
+.result a {
+  flex: 0 0 auto; /* чтоб не обрезало текстовые строки по вертикали */
+
+  padding: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 0.5rem;
+
+  color: var(--dark-color);
+  text-decoration: none;
+}
+.result a:hover {
+  color: var(--dark-color-hover);
+  background-color: var(--light-bg-hover);
+}
+
+.searchbox {
+  width: 100%;
+  height: 3.5rem; /* 3.5 пикселя есть лишних, приходится задавать высоту так :( */
+  position: relative;
+}
+.searchbox input {
+  border: none;
+  /* border-radius: 0.75rem; */
+  font-size: 1.5rem;
+  padding: 1rem 1rem 1rem 4rem;
+  width: 100%;
+  line-height: 1;
+  height: 100%; /* 3.5 пикселя есть лишних, приходится задавать высоту так :( */
+}
+.searchbox input:focus {
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding: 1rem;
+  pointer-events: none;
+  transition: padding 0.25s ease-in-out;
+}
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-wrapper:has(input:focus) .search-icon,
+.search-bar.active .search-icon {
+  padding: 0.8rem;
+}
+
+/* /////////////////////////////// */
+/* /////////////////////////////// */
+
+.courier-bar {
+  grid-row: 2;
+  grid-column: 2 / -2;
+  position: relative;
+}
+
+.courier-bar .btn {
+  position: absolute;
+  inset: 0 1rem 1rem 1rem;
+  /* border-radius: 0; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 600px) {
+  .courier-bar {
+    grid-row: 2;
+    grid-column: 2 / -2;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .courier-bar .btn {
+    position: relative;
+    inset: 0;
+    width: fit-content;
+  }
+}
+
+/* /////////////////////////////// */
+/* /////////////////////////////// */
+
