@@ -3,6 +3,8 @@ require('dotenv').config(); // Подгружаем .env
 const express = require('express');
 const jwt = require('jsonwebtoken'); // JWT Token для хранения сессии
 
+const { GoogleGenAI } = require("@google/genai"); // for commonJS
+
 const crypto = require('crypto'); // ⚠️ 🟪 для шифрования паролей (default)
 const { randomUUID } = require('crypto'); // ⚠️ crypto - генератор имен
 const { hashPassword, verifyPassword } = require('./auth'); // 🟪 хэширование
@@ -14,6 +16,7 @@ const cors = require('cors'); // кросс-доменные запросы (н�
 const app = express();
 const PORT = process.env.PORT || 3000;
 const secretKey = process.env.JWT_SECRET;
+const apiKey = process.env.GEMINI_API_KEY;
 
 const COURIERS_FILE = path.join(__dirname, 'couriers.json');
 let couriers = [];
@@ -205,6 +208,41 @@ app.get('/api/profile/:username', (req, res) => {
     updatedAt: courier.updatedAt,
     avatarLink: courier.avatarLink
   });
+});
+
+// 🔶API🔶 geminiAI
+app.get('/api/generate', async (req, res) => {
+  try {
+    const ai = new GoogleGenAI({ apiKey: apiKey });
+
+    async function generate() {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash",
+        contents: "Generate one random full name. Return only the name and surname, with no other text.",
+      });
+      let generatedText = response.text;
+
+      // Обрабатываем ответ, чтобы гарантированно получить только имя
+      // Ищем последнее двоеточие и берем текст после него
+      const colonIndex = generatedText.lastIndexOf(':');
+      if (colonIndex !== -1) {
+        generatedText = generatedText.substring(colonIndex + 1);
+      }
+
+      // Убираем возможные маркдаун-символы (вроде *) и лишние пробелы по краям
+      const cleanedName = generatedText.replace(/\*/g, '').trim();
+
+      return cleanedName;
+    }
+
+    // Дожидаемся, пока Promise разрешится и вернет результат
+    const randomName = await generate();
+    console.log(randomName);
+    res.json({ randomName });
+  } catch (error) {
+    console.error("Ошибка при генерации контента:", error);
+    res.status(500).json({ error: "Не удалось сгенерировать имя" });
+  }
 });
 
 // 🟢html🟢 отправляем index.html

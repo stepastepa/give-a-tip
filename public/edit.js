@@ -86,3 +86,31 @@ optionBtn.addEventListener('click', async () => {
   localStorage.removeItem('jwtToken');
   // window.location.href = '/'; // авто редирект на главную, но я решил по ссылке сделать его
 });
+
+////////////////////
+/////   AI     /////
+////////////////////
+
+const generateBtn = document.getElementById('generate-btn');
+
+async function fetchRandomName() {
+  try {
+    // Показываем пользователю, что идет процесс
+    aiMessage.textContent = 'AI is thinking...';
+
+    const response = await fetch('/api/generate');
+    if (!response.ok) {
+        throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
+    }
+    const data = await response.json();
+
+    nameInputEdit.value = data.randomName;
+    aiMessage.textContent = ''; // стираем сообщение
+
+  } catch (error) {
+    console.error("Не удалось получить имя:", error);
+    aiMessage.textContent = 'Произошла ошибка. Попробуйте снова.';
+  }
+}
+
+aiNameBtn.addEventListener('click', fetchRandomName);
