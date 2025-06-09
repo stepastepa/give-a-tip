@@ -91,8 +91,6 @@ optionBtn.addEventListener('click', async () => {
 /////   AI     /////
 ////////////////////
 
-const generateBtn = document.getElementById('generate-btn');
-
 async function fetchRandomName() {
   try {
     // Показываем пользователю, что идет процесс
