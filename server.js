@@ -4,6 +4,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken'); // JWT Token для хранения сессии
 
 const { GoogleGenAI } = require("@google/genai"); // for commonJS
+const { OpenAI } = require('openai'); // for commonJS
 
 const crypto = require('crypto'); // ⚠️ 🟪 для шифрования паролей (default)
 const { randomUUID } = require('crypto'); // ⚠️ crypto - генератор имен
@@ -264,6 +265,33 @@ app.get('/api/aigenerate', async (req, res) => {
         console.error("В ответе AI не найден валидный JSON:", rawText);
         throw new Error("В ответе AI не найден валидный JSON.");
       }
+    }
+
+    // Дожидаемся, пока Promise разрешится и вернет результат
+    const randomName = await generate();
+    console.log(randomName);
+    res.json({ randomName });
+  } catch (error) {
+    console.error("Ошибка при генерации контента:", error);
+    res.status(500).json({ error: "Не удалось сгенерировать имя" });
+  }
+});
+
+///////////////////////////////////////////////////////////////
+// 🔶API🔶 OpenAI
+app.get('/api/openaigenerate', async (req, res) => {
+  try {
+    const client = new OpenAI({
+      apiKey: process.env['OPENAI_API_KEY'], // This is the default and can be omitted
+    });
+
+    async function generate() {
+      const response = await client.responses.create({
+        model: 'gpt-4o',
+        input: "Generate a JSON object with a random 'firstName' and 'lastName'. Strictly adhere to the JSON schema and only return the JSON object, without any introductory text.",
+      });
+
+      return response.output_text;
     }
 
     // Дожидаемся, пока Promise разрешится и вернет результат
