@@ -4,7 +4,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken'); // JWT Token для хранения сессии
 
 const { GoogleGenAI } = require("@google/genai"); // for commonJS
-const { OpenAI } = require('openai'); // for commonJS
+// const { OpenAI } = require('openai'); // for commonJS
 
 const crypto = require('crypto'); // ⚠️ 🟪 для шифрования паролей (default)
 const { randomUUID } = require('crypto'); // ⚠️ crypto - генератор имен
@@ -277,6 +277,7 @@ app.get('/api/aigenerate', async (req, res) => {
   }
 });
 
+/*
 ///////////////////////////////////////////////////////////////
 // 🔶API🔶 OpenAI
 app.get('/api/openaigenerate', async (req, res) => {
@@ -303,6 +304,7 @@ app.get('/api/openaigenerate', async (req, res) => {
     res.status(500).json({ error: "Не удалось сгенерировать имя" });
   }
 });
+*/
 
 ///////////////////////////////////////////////////////////////
 // 🔶API🔶 from behindthename site
