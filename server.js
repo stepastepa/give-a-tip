@@ -216,23 +216,53 @@ app.get('/api/generate', async (req, res) => {
     const ai = new GoogleGenAI({ apiKey: apiKey });
 
     async function generate() {
+      // Прямо приказываем модели создать JSON и следовать схеме.
+      const prompt = "Generate a JSON object with a random 'firstName' and 'lastName'. Strictly adhere to the JSON schema and only return the JSON object, without any introductory text.";
+
       const response = await ai.models.generateContent({
         model: "gemini-2.0-flash",
-        contents: "Generate one random full name. Return only the name and surname, with no other text.",
+        contents: prompt,
+        generationConfig: {
+          // Указываем, что ждем ответ в формате JSON
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "OBJECT",
+            properties: {
+              firstName: {
+                type: "STRING",
+                description: "The person's generated first name."
+              },
+              lastName: {
+                type: "STRING",
+                description: "The person's generated last name."
+              }
+            },
+            required: ["firstName", "lastName"]
+          },
+        },
       });
-      let generatedText = response.text;
 
-      // Обрабатываем ответ, чтобы гарантированно получить только имя
-      // Ищем последнее двоеточие и берем текст после него
-      const colonIndex = generatedText.lastIndexOf(':');
-      if (colonIndex !== -1) {
-        generatedText = generatedText.substring(colonIndex + 1);
+      const rawText = response.text;
+      // Находим первую открывающуюся фигурную скобку '{'
+      const jsonStart = rawText.indexOf('{');
+      // Находим последнюю закрывающуюся фигурную скобку '}'
+      const jsonEnd = rawText.lastIndexOf('}');
+
+      if (jsonStart !== -1 && jsonEnd !== -1) {
+        // Вырезаем подстроку, которая содержит только JSON
+        const jsonString = rawText.substring(jsonStart, jsonEnd + 1);
+        try {
+          // Теперь парсим чистую JSON-строку
+          const jsonResponse = JSON.parse(jsonString);
+          return jsonResponse;
+        } catch (e) {
+           console.error("Ошибка парсинга JSON:", e);
+           throw new Error("Не удалось разобрать JSON из ответа AI.");
+        }
+      } else {
+        console.error("В ответе AI не найден валидный JSON:", rawText);
+        throw new Error("В ответе AI не найден валидный JSON.");
       }
-
-      // Убираем возможные маркдаун-символы (вроде *) и лишние пробелы по краям
-      const cleanedName = generatedText.replace(/\*/g, '').trim();
-
-      return cleanedName;
     }
 
     // Дожидаемся, пока Promise разрешится и вернет результат

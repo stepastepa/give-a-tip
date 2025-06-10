@@ -102,7 +102,7 @@ async function fetchRandomName() {
     }
     const data = await response.json();
 
-    nameInputEdit.value = data.randomName;
+    nameInputEdit.value = data.randomName.firstName + ' ' + data.randomName.lastName; // получаем объект и собираем полное имя
     aiMessage.textContent = ''; // стираем сообщение
 
   } catch (error) {
