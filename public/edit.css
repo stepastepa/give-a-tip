@@ -90,6 +90,9 @@ body {
   padding-left: 0.4rem;
   padding-right: 0.4rem;
 }
+.tiny-btn#aiNameBtn {
+  display: none; /* disable ai button */
+}
 #aiMessage {
   margin-left: auto;
   font-size: 0.7rem;
