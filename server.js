@@ -331,7 +331,7 @@ app.get('/api/generate', async (req, res) => {
     const url = `https://www.behindthename.com/api/random.json?key=${apiKeyBehindthename}&randomsurname=yes&usage=eng`;
     const response = await fetch(url);
     const data = await response.json();
-    const randomName = await data.names;
+    const randomName = data.names;
 
     console.log(randomName);
     res.json({ randomName });
