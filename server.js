@@ -310,6 +310,7 @@ app.get('/api/openaigenerate', async (req, res) => {
 // 🔶API🔶 from behindthename site
 app.get('/api/generate', async (req, res) => {
   try {
+    /*
     async function getRandomName() {
       const url = `https://www.behindthename.com/api/random.json?key=${apiKeyBehindthename}&randomsurname=yes&usage=eng`;
 
@@ -317,7 +318,7 @@ app.get('/api/generate', async (req, res) => {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
-        // console.log(data.names);2
+        // console.log(data.names);
         return data.names;
       } catch (error) {
         console.error('Ошибка:', error);
@@ -325,6 +326,13 @@ app.get('/api/generate', async (req, res) => {
     }
   
     const randomName = await getRandomName();
+    */
+
+    const url = `https://www.behindthename.com/api/random.json?key=${apiKeyBehindthename}&randomsurname=yes&usage=eng`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const randomName = await data.names;
+
     console.log(randomName);
     res.json({ randomName });
   } catch (error) {
