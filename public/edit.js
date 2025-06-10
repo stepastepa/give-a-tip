@@ -96,7 +96,7 @@ async function fetchRandomName() {
     // Показываем пользователю, что идет процесс
     aiMessage.textContent = 'AI is thinking...';
 
-    const response = await fetch('/api/generate');
+    const response = await fetch('/api/aigenerate');
     if (!response.ok) {
         throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
     }
@@ -112,3 +112,29 @@ async function fetchRandomName() {
 }
 
 aiNameBtn.addEventListener('click', fetchRandomName);
+
+///////////////////////
+/////    no ai    /////
+///////////////////////
+
+async function fetchRandomNameNoAI() {
+  try {
+    // Показываем пользователю, что идет процесс
+    aiMessage.textContent = 'Loading...';
+
+    const response = await fetch('/api/generate');
+    if (!response.ok) {
+        throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
+    }
+    const data = await response.json();
+
+    nameInputEdit.value = data.randomName[0] + ' ' + data.randomName[1] + ' ' + data.randomName[2]; // получаем объект и собираем полное имя
+    aiMessage.textContent = ''; // стираем сообщение
+
+  } catch (error) {
+    console.error("Не удалось получить имя:", error);
+    aiMessage.textContent = 'Произошла ошибка. Попробуйте снова.';
+  }
+}
+
+noaiNameBtn.addEventListener('click', fetchRandomNameNoAI);

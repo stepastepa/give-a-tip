@@ -17,6 +17,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const secretKey = process.env.JWT_SECRET;
 const apiKey = process.env.GEMINI_API_KEY;
+const apiKeyBehindthename = process.env.BEHINDTHENAME_API_KEY;
 
 const COURIERS_FILE = path.join(__dirname, 'couriers.json');
 let couriers = [];
@@ -211,7 +212,7 @@ app.get('/api/profile/:username', (req, res) => {
 });
 
 // 🔶API🔶 geminiAI
-app.get('/api/generate', async (req, res) => {
+app.get('/api/aigenerate', async (req, res) => {
   try {
     const ai = new GoogleGenAI({ apiKey: apiKey });
 
@@ -274,6 +275,34 @@ app.get('/api/generate', async (req, res) => {
     res.status(500).json({ error: "Не удалось сгенерировать имя" });
   }
 });
+
+///////////////////////////////////////////////////////////////
+// 🔶API🔶 from behindthename site
+app.get('/api/generate', async (req, res) => {
+  try {
+    async function getRandomName() {
+      const url = `https://www.behindthename.com/api/random.json?key=${apiKeyBehindthename}&randomsurname=yes&usage=eng`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const data = await response.json();
+        // console.log(data.names);2
+        return data.names;
+      } catch (error) {
+        console.error('Ошибка:', error);
+      }
+    }
+  
+    const randomName = await getRandomName();
+    console.log(randomName);
+    res.json({ randomName });
+  } catch (error) {
+    console.error("Ошибка при генерации контента:", error);
+    res.status(500).json({ error: "Не удалось сгенерировать имя" });
+  }
+});
+///////////////////////////////////////////////////////////////
 
 // 🟢html🟢 отправляем index.html
 app.get('/', (req, res) => {
