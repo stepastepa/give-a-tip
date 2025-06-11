@@ -1,3 +1,5 @@
+import { secureRedirect } from './secure-redirect.js';
+
 const input = document.querySelector('.searchbox input');
 const inputBox = document.querySelector('.search-bar');
 // const btn = document.querySelector('.search-bar .btn');
@@ -91,3 +93,9 @@ function updateMask() {
 searchResults.addEventListener('scroll', updateMask);
 window.addEventListener('load', updateMask); // бесполезное, но пусть будет...
 window.addEventListener('resize', updateMask); // чтоб обновляло маску при изменении размера окна тоже
+
+///////////////////////////////////
+/////     secure redirect     /////
+///////////////////////////////////
+
+loginBtn.addEventListener('click', () => secureRedirect('/edit', '/login'));
