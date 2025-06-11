@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('jwtToken');
 
   if (!token) {
-    return window.location.href = '/login'; // нет токена —> редирект обратно!!!
+    return window.location.href = '/login'; // нет токена —> редирект на логин!!!
   }
 
   const res = await fetch('/api/edit', {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     messageInputEdit.value = user.message;
     bankLinkInputEdit.value = user.bankLink;
   } else {
-    alert('Error: ' + data.error);
+    // alert('Error: ' + data.error); // убрал алерт с ошибкой!
     window.location.href = '/login';
   }
 });
