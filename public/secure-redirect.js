@@ -38,7 +38,7 @@ function secureRedirect(secureUrl/* = '/edit'*/, fallbackUrl/* = '/login'*/) {
   const now = Date.now() / 1000;
 
   if (decoded.exp < now) {
-    alert('Сессия истекла. Пожалуйста, войдите снова.');
+    // alert('Сессия истекла. Пожалуйста, войдите снова.');
     localStorage.removeItem('jwtToken');
     return window.location.href = fallbackUrl;
   }
