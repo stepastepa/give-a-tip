@@ -66,6 +66,12 @@ app.post('/api/register', (req, res) => {
     return res.status(400).json({ message: 'User already exists' });
   }
 
+  // Проверка написания имейла
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!isValidEmail) {
+    return res.status(400).json({ message: 'Email is incorrect' });
+  }
+
   // empty default values
   let name = `Courier ${randomUUID().slice(0, 6)}`; // ⚠️ crypto - генератор имен
   // let name = `Courier ${Math.floor(Math.random() * 9999)}`;
