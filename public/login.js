@@ -146,7 +146,7 @@ function checkEmail() {
   if(isExisted) {
     emailInputReg.classList.remove('valid');
     emailInputReg.classList.add('invalid');
-  } else if(emailInputReg.value === '') {
+  } else if(emailInputReg.value === '' || !isValidEmail) {
     emailInputReg.classList.remove('valid');
     emailInputReg.classList.remove('invalid');
   } else if(isValidEmail) {
