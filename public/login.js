@@ -28,6 +28,9 @@ const messageReg = document.getElementById('msgReg');
 
 formReg.addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  if(usernameInputReg.className !== 'valid' || emailInputReg.className !== 'valid') return; // terminate submit if not valid
+
   const formData = new FormData(formReg);
   const payload = Object.fromEntries(formData.entries());
 
@@ -130,6 +133,8 @@ function checkUsername() {
     usernameInputReg.classList.remove('invalid');
     usernameInputReg.classList.add('valid');
   }
+
+  buttonActivation();
 }
 
 // проверка имейлов
@@ -153,4 +158,19 @@ function checkEmail() {
     emailInputReg.classList.remove('invalid');
     emailInputReg.classList.add('valid');
   }
+
+  buttonActivation();
 }
+
+// button activation
+function buttonActivation() {
+  if(usernameInputReg.className !== 'valid' || emailInputReg.className !== 'valid') {
+    registerContainer.querySelector('button').setAttribute('disabled', '');
+    registerContainer.querySelector('button').classList.add('disabled');
+  } else {
+    registerContainer.querySelector('button').removeAttribute('disabled');
+    registerContainer.querySelector('button').classList.remove('disabled');
+  }
+}
+
+buttonActivation();
