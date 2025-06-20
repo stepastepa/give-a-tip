@@ -190,6 +190,12 @@ app.get('/api/couriers', (req, res) => {
   res.json(valid);
 });
 
+// 🔶API🔶 Получить список всех аккаунтов
+app.get('/api/listOfUsers', (req, res) => {
+  const listOfUsers = couriers.map(({ username, email }) => ({ username, email }));
+  res.json(listOfUsers);
+});
+
 // 🔶API🔶 Получить профиль курьера
 app.get('/api/profile/:username', (req, res) => {
   const { username } = req.params;

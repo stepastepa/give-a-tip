@@ -90,9 +90,67 @@ formLog.addEventListener('submit', async (e) => {
 
 const allInputs = document.querySelectorAll('input');
 
-allInputs.forEach((el) => el.addEventListener('input', () => {
-  if(el.value === '') {
-    el.closest('.incorrect').querySelector('.active-error').classList.remove('active-error');
-    el.closest('.incorrect').classList.remove('incorrect');
+// allInputs.forEach((el) => el.addEventListener('input', () => {
+//   if(el.value === '') {
+//     el.closest('.incorrect').querySelector('.active-error').classList.remove('active-error');
+//     el.closest('.incorrect').classList.remove('incorrect');
+//   }
+// }));
+
+//////////////////////////////////////////////////////
+//////////     realtime form validation     //////////
+//////////////////////////////////////////////////////
+
+// получаем список всех юзеров
+let listOfUsers = [];
+async function fetchUsers() {
+  try {
+    const res = await fetch('/api/listOfUsers');
+    listOfUsers = await res.json();
+  } catch (error) {
+    console.error('Failed to load list of users', error);
   }
-}));
+}
+fetchUsers(); // запрашиваем список всех юзеров
+
+// проверка юзеров
+usernameInputReg.addEventListener('input', checkUsername);
+
+function checkUsername() {
+  let found = listOfUsers.filter(user => user.username === usernameInputReg.value);
+  // console.log(found.length>0?found[0].username:false);
+  let isExisted = found.length>0?found[0].username:false;
+  if(isExisted) {
+    usernameInputReg.classList.remove('valid');
+    usernameInputReg.classList.add('invalid');
+  } else if(usernameInputReg.value === '') {
+    usernameInputReg.classList.remove('valid');
+    usernameInputReg.classList.remove('invalid');
+  } else {
+    usernameInputReg.classList.remove('invalid');
+    usernameInputReg.classList.add('valid');
+  }
+}
+
+// проверка имейлов
+emailInputReg.addEventListener('input', checkEmail);
+
+function checkEmail() {
+  let found = listOfUsers.filter(user => user.email === emailInputReg.value);
+  console.log(found.length>0?found[0].email:false);
+  let isExisted = found.length>0?found[0].email:false;
+  
+  // проверяем написание строки с почтой
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInputReg.value);
+
+  if(isExisted) {
+    emailInputReg.classList.remove('valid');
+    emailInputReg.classList.add('invalid');
+  } else if(emailInputReg.value === '') {
+    emailInputReg.classList.remove('valid');
+    emailInputReg.classList.remove('invalid');
+  } else if(isValidEmail) {
+    emailInputReg.classList.remove('invalid');
+    emailInputReg.classList.add('valid');
+  }
+}

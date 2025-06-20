@@ -171,3 +171,30 @@ body {
   align-items: center;
 }
 */
+
+#registerContainer input.valid {
+ border-color: #6ec540;
+ background-color: hsl(115, 100%, 95%);
+}
+#registerContainer input.invalid {
+  position: relative;
+  border-color: #ff9eb1;
+  background-color: hsl(348, 100%, 95%);
+}
+
+#registerContainer label:has(input.invalid):after {
+  content: 'already exist';
+  color: var(--white);
+  background-color: crimson;
+  height: 1.5rem;
+  padding: 0 0.85rem;
+  position: absolute;
+  right: 1rem;
+  top: 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
