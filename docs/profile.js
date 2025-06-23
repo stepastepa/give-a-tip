@@ -43,7 +43,7 @@ async function loadProfile() {
   if (!username) {
     container.innerHTML = `
       <p class="error">Username is missing...</p>
-      <a class="close" href="${location.origin}"><img src="./images/chevron-left.svg"><span>Back</span></a>
+      <a class="close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
     `;
     return;
   }
