@@ -65,39 +65,6 @@ body {
   margin-top: 1rem;
 }
 
-.label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-}
-.tiny-btn {
-  background-color: var(--dark-color);
-  color: var(--white);
-  height: 1.25rem;
-  width: 1.25rem;
-  font-size: 0.7rem;
-  border-radius: 0.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin-top: -1.25rem;
-  margin-bottom: -1.25rem;
-}
-.tiny-btn#noaiNameBtn {
-  width: fit-content;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-}
-.tiny-btn#aiNameBtn {
-  display: none; /* disable ai button */
-}
-#aiMessage {
-  margin-left: auto;
-  font-size: 0.7rem;
-}
-
 @media (max-width: 400px) {
   body {
     padding: 0;

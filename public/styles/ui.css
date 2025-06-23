@@ -100,7 +100,7 @@ html {
   width: max-content;
   font-size: 1rem;
   z-index: 999;
-  animation: in 0.25s ease forwards, out 0.25s 3s ease forwards;;
+  animation: in 0.25s ease forwards, out 0.25s 30s ease forwards;;
   transform: translate(-50%, -20%);
 }
 @keyframes in {

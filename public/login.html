@@ -39,10 +39,6 @@
 
     <div id="registerContainer" class="tab-content">
       <form id="registerForm">
-        <label for="usernameInputReg">
-          Username:
-          <input id="usernameInputReg" type="text" name="username" required />
-        </label>
         <label for="emailInputReg">
           Email:
           <input id="emailInputReg" type="text" name="email" required />
@@ -51,12 +47,16 @@
           Password:
           <input id="passwordInputReg" type="password" name="password" required />
         </label>
+        <label for="confirmPasswordInputReg">
+          Confirm Password:
+          <input id="confirmPasswordInputReg" type="password" name="confirmPassword" required />
+        </label>
         <button type="submit" class="btn">Register</button>
       </form>
       <div class="message" id="msgReg">message</div>
     </div>
   </div>
 
-  <script src="./login.js"></script>
+  <script type="module" src="./login.js"></script>
 </body>
 </html>

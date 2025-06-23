@@ -198,3 +198,6 @@ body {
   justify-content: center;
   align-items: center;
 }
+#registerContainer label:has(#confirmPasswordInputReg.invalid):after {
+  content: "doesn't match";
+}

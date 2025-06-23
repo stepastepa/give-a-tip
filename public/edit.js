@@ -1,31 +1,56 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const token = localStorage.getItem('jwtToken');
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 
-  if (!token) {
-    return window.location.href = '/login'; // нет токена —> редирект на логин!!!
-  }
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
-  const res = await fetch('/api/edit', {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + token
+import {
+  getFirestore,
+  getDoc,
+  doc,
+  setDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB9ekJy28TCq-CsQh3fb0ibyIgPZbEIpxo",
+  authDomain: "give-a-tip.firebaseapp.com",
+  projectId: "give-a-tip",
+  storageBucket: "give-a-tip.firebasestorage.app",
+  messagingSenderId: "177375336520",
+  appId: "1:177375336520:web:2f53a6f95dbe4b753d207d",
+  measurementId: "G-06X0NRB6H2"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/////////////////////////////////
+/////////////////////////////////
+/////////////////////////////////
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    // ищем данные сразу по uid
+    const docRef = doc(db, 'couriers', user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      console.log(data);
+
+      avatarLinkInputEdit.value = data.avatarLink || '';
+      usernameInputEdit.value = data.username || '';
+      nameInputEdit.value = data.name || '';
+      messageInputEdit.value = data.message || '';
+      bankLinkInputEdit.value = data.bankLink || '';
+    } else {
+      console.warn("Профиль не найден.");
     }
-  });
-
-  const data = await res.json();
-
-  if (res.ok) {
-    const user = data.user;
-    avatarLinkInputEdit.value = user.avatarLink;
-    // usernameInputEdit.value = user.username;
-    emailInputEdit.value = user.email;
-    // passwordInputEdit.value = user.password;
-    nameInputEdit.value = user.name;
-    messageInputEdit.value = user.message;
-    bankLinkInputEdit.value = user.bankLink;
   } else {
-    // alert('Error: ' + data.error); // убрал алерт с ошибкой!
-    window.location.href = '/login';
+    window.location.href = './login.html';
   }
 });
 
@@ -41,100 +66,46 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const formData = new FormData(form);
   const payload = Object.fromEntries(formData.entries());
-  console.log(payload);
-  const token = localStorage.getItem('jwtToken');
 
-  const res = await fetch('/api/update', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json',
-               'Authorization': 'Bearer ' + token },
-    body: JSON.stringify(payload)
-  });
-
-  const data = await res.json();
-  if (res.ok) {
-    msg.textContent = 'Profile updated! Redirecting...';
-    msg.style.color = 'limegreen';
-    msg.classList.add('active-success');
-    form.reset();
-    setTimeout(() => {
-      window.location.href = `/profile.html?username=${data.username}`;
-    }, 2000);
-  } else {
-    msg.textContent = `${data.message}`;
+  try {
+    await setDoc(doc(db, 'couriers', auth.currentUser.uid), { // uid в профиле для связи аккаунта и данных, чтоб искать прямо по uid сразу!!!
+      username: payload.username,
+      name: payload.name,
+      message: payload.message,
+      bankLink: payload.bankLink,
+      avatarLink: payload.avatarLink,
+      createdAt: Date.now()
+    });
+    window.location.href = `./profile.html?username=${payload.username}`;
+  } catch (err) {
+    msg.textContent = `${err.message}`;
     msg.classList.add('active-error');
     editCard.classList.add('incorrect');
   }
 });
 
 ///////////////////////////////////////////////
-//////////     Input class reset     //////////
+//////////     Input error reset     //////////
 ///////////////////////////////////////////////
 
-nameInputEdit.addEventListener('input', () => {
-  if(nameInputEdit.value === '') {
-    nameInputEdit.closest('.incorrect').querySelector('.active-error').classList.remove('active-error');
-    nameInputEdit.closest('.incorrect').classList.remove('incorrect');
-  }
-});
+// const allInputs = document.querySelectorAll('input');
+
+// allInputs.forEach((el) => el.addEventListener('input', () => {
+//   if(el.value === '') {
+//     el.classList.remove('invalid');
+//   }
+// }));
+
+// nameInputEdit.addEventListener('input', () => {
+//   nameInputEdit.closest('.incorrect').querySelector('.active-error').classList.remove('active-error');
+//   nameInputEdit.closest('.incorrect').classList.remove('incorrect');
+// });
 
 ///////////////////////
 /////   logout    /////
 ///////////////////////
 
 optionBtn.addEventListener('click', async () => {
-  localStorage.removeItem('jwtToken');
+  await signOut(auth);
   // window.location.href = '/'; // авто редирект на главную, но я решил по ссылке сделать его
 });
-
-////////////////////
-/////   AI     /////
-////////////////////
-
-async function fetchRandomName() {
-  try {
-    // Показываем пользователю, что идет процесс
-    aiMessage.textContent = 'AI is thinking...';
-
-    const response = await fetch('/api/aigenerate');
-    if (!response.ok) {
-        throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
-    }
-    const data = await response.json();
-
-    nameInputEdit.value = data.randomName.firstName + ' ' + data.randomName.lastName; // получаем объект и собираем полное имя
-    aiMessage.textContent = ''; // стираем сообщение
-
-  } catch (error) {
-    console.error("Не удалось получить имя:", error);
-    aiMessage.textContent = 'Произошла ошибка. Попробуйте снова.';
-  }
-}
-
-aiNameBtn.addEventListener('click', fetchRandomName);
-
-///////////////////////
-/////    no ai    /////
-///////////////////////
-
-async function fetchRandomNameNoAI() {
-  try {
-    // Показываем пользователю, что идет процесс
-    aiMessage.textContent = 'Loading...';
-
-    const response = await fetch('/api/generate');
-    if (!response.ok) {
-        throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
-    }
-    const data = await response.json();
-
-    nameInputEdit.value = data.randomName[0] + ' ' + data.randomName[1] + ' ' + data.randomName[2]; // получаем объект и собираем полное имя
-    aiMessage.textContent = ''; // стираем сообщение
-
-  } catch (error) {
-    console.error("Не удалось получить имя:", error);
-    aiMessage.textContent = 'Произошла ошибка. Попробуйте снова.';
-  }
-}
-
-noaiNameBtn.addEventListener('click', fetchRandomNameNoAI);

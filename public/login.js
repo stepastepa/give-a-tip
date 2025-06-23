@@ -1,3 +1,34 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+import {
+  getFirestore
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB9ekJy28TCq-CsQh3fb0ibyIgPZbEIpxo",
+  authDomain: "give-a-tip.firebaseapp.com",
+  projectId: "give-a-tip",
+  storageBucket: "give-a-tip.firebasestorage.app",
+  messagingSenderId: "177375336520",
+  appId: "1:177375336520:web:2f53a6f95dbe4b753d207d",
+  measurementId: "G-06X0NRB6H2"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/////////////////////////////////
+/////////////////////////////////
+/////////////////////////////////
+
 const loginTab = document.getElementById('login-tab');
 const registerTab = document.getElementById('register-tab');
 
@@ -29,28 +60,37 @@ const messageReg = document.getElementById('msgReg');
 formReg.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  if(usernameInputReg.className !== 'valid' || emailInputReg.className !== 'valid') return; // terminate submit if not valid
+  // if(emailInputReg.className !== 'valid') return; // terminate submit if not valid
 
   const formData = new FormData(formReg);
   const payload = Object.fromEntries(formData.entries());
 
-  const res = await fetch('/api/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+  if (passwordInputReg.value !== confirmPasswordInputReg.value) {
+    confirmPasswordInputReg.classList.add('invalid');
+    return;
+  }
 
-  const data = await res.json();
-  if (res.ok) {
-    messageReg.innerHTML = `Success!<a href="/login">Sign in</a>`;
-    messageReg.classList.remove('active-error');
-    messageReg.classList.add('active-success');
-    formReg.reset();
-    setTimeout(() => {
-      window.location.href = `/login`;
-    }, 2000);
-  } else {
-    messageReg.textContent = `${data.message}`;
+  try {
+    await createUserWithEmailAndPassword(auth, payload.email, payload.password);
+    // ✅ переходим на страницу edit.html
+    window.location.href = `/edit.html`;
+  } catch (err) {
+    // переводим ошибки на человеческий язык
+    let msg;
+    switch (err.code) {
+      case "auth/email-already-in-use":
+        msg = "This email is already used";
+        break;
+      case "auth/invalid-email":
+        msg = "Emsil is incorrect";
+        break;
+      case "auth/weak-password":
+        msg = "Password is too weak";
+        break;
+      default:
+        msg = err.message;
+    }
+    messageReg.textContent = `${msg}`;
     messageReg.classList.remove('active-success');
     messageReg.classList.add('active-error');
     registerContainer.classList.add('incorrect');
@@ -69,18 +109,15 @@ formLog.addEventListener('submit', async (e) => {
   const formData = new FormData(formLog);
   const payload = Object.fromEntries(formData.entries());
 
-  const res = await fetch('/api/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+  console.log(payload.email);
+  console.log(payload.password);
 
-  const data = await res.json();
-  if (res.ok) {
-    localStorage.setItem('jwtToken', data.token); // сохраняем токен
-    window.location.href = '/edit'; // просто переходим, токен на /edit проверим!!!
-  } else {
-    messageLog.textContent = `${data.message}`;
+  try {
+    await signInWithEmailAndPassword(auth, payload.email, payload.password);
+    // ✅ переходим на страницу edit.html
+    window.location.href = `/edit.html`;
+  } catch (err) {
+    messageLog.textContent = `${err.message}`;
     messageLog.classList.remove('active-success');
     messageLog.classList.add('active-error');
     loginContainer.classList.add('incorrect');
@@ -88,89 +125,23 @@ formLog.addEventListener('submit', async (e) => {
 });
 
 ///////////////////////////////////////////////
-//////////     Input class reset     //////////
+//////////     Input error reset     //////////
 ///////////////////////////////////////////////
 
-const allInputs = document.querySelectorAll('input');
+// const allInputs = document.querySelectorAll('input');
 
 // allInputs.forEach((el) => el.addEventListener('input', () => {
 //   if(el.value === '') {
-//     el.closest('.incorrect').querySelector('.active-error').classList.remove('active-error');
-//     el.closest('.incorrect').classList.remove('incorrect');
+//     el.classList.remove('invalid');
 //   }
 // }));
 
-//////////////////////////////////////////////////////
-//////////     realtime form validation     //////////
-//////////////////////////////////////////////////////
+emailInputReg.addEventListener('input', () => {
+  emailInputReg.closest('.incorrect').querySelector('.active-error').classList.remove('active-error');
+  emailInputReg.closest('.incorrect').classList.remove('incorrect');
+});
 
-// получаем список всех юзеров
-let listOfUsers = [];
-async function fetchUsers() {
-  try {
-    const res = await fetch('/api/listOfUsers');
-    listOfUsers = await res.json();
-  } catch (error) {
-    console.error('Failed to load list of users', error);
-  }
-}
-fetchUsers(); // запрашиваем список всех юзеров
-
-// проверка юзеров
-usernameInputReg.addEventListener('input', checkUsername);
-
-function checkUsername() {
-  let found = listOfUsers.filter(user => user.username === usernameInputReg.value);
-  // console.log(found.length>0?found[0].username:false);
-  let isExisted = found.length>0?found[0].username:false;
-  if(isExisted) {
-    usernameInputReg.classList.remove('valid');
-    usernameInputReg.classList.add('invalid');
-  } else if(usernameInputReg.value === '') {
-    usernameInputReg.classList.remove('valid');
-    usernameInputReg.classList.remove('invalid');
-  } else {
-    usernameInputReg.classList.remove('invalid');
-    usernameInputReg.classList.add('valid');
-  }
-
-  buttonActivation();
-}
-
-// проверка имейлов
-emailInputReg.addEventListener('input', checkEmail);
-
-function checkEmail() {
-  let found = listOfUsers.filter(user => user.email === emailInputReg.value);
-  console.log(found.length>0?found[0].email:false);
-  let isExisted = found.length>0?found[0].email:false;
-  
-  // проверяем написание строки с почтой
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInputReg.value);
-
-  if(isExisted) {
-    emailInputReg.classList.remove('valid');
-    emailInputReg.classList.add('invalid');
-  } else if(emailInputReg.value === '' || !isValidEmail) {
-    emailInputReg.classList.remove('valid');
-    emailInputReg.classList.remove('invalid');
-  } else if(isValidEmail) {
-    emailInputReg.classList.remove('invalid');
-    emailInputReg.classList.add('valid');
-  }
-
-  buttonActivation();
-}
-
-// button activation
-function buttonActivation() {
-  if(usernameInputReg.className !== 'valid' || emailInputReg.className !== 'valid') {
-    registerContainer.querySelector('button').setAttribute('disabled', '');
-    registerContainer.querySelector('button').classList.add('disabled');
-  } else {
-    registerContainer.querySelector('button').removeAttribute('disabled');
-    registerContainer.querySelector('button').classList.remove('disabled');
-  }
-}
-
-buttonActivation();
+passwordInputReg.addEventListener('input', () => {
+  passwordInputReg.closest('.incorrect').querySelector('.active-error').classList.remove('active-error');
+  passwordInputReg.closest('.incorrect').classList.remove('incorrect');
+});

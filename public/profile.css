@@ -61,6 +61,7 @@ body {
 }
 
 .profile-card h1 {
+  line-height: 1.2;
   font-size: 2rem;
   text-align: center;
 }
@@ -148,4 +149,27 @@ p.error {
     margin-top: auto;
     margin-bottom: auto;
   }
+}
+
+/*/////// loading placeholders ///////*/
+
+.profile-card h1.loading {
+  width: 250px;
+  height: calc(2rem * 1.2);
+  background-color: var(--light-bg);
+  border-radius: 0.75rem;
+}
+
+.profile-card p.loading {
+  width: 150px;
+  height: calc(1.1rem * 1.4);
+  background-color: var(--light-bg);
+  border-radius: 0.75rem;
+}
+
+.profile-card .btn.loading {
+  background-color: var(--light-bg);
+  width: 166px;
+  height: 3.5rem;
+  cursor: default;
 }

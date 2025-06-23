@@ -24,29 +24,12 @@
 
   <div class="edit-card">
     <form id="editForm">
-      <label for="avatarLinkInputEdit">
-        Avatar Link:
-        <input id="avatarLinkInputEdit" type="text" name="avatarLink" />
-      </label>
-      <!-- <label for="usernameInputEdit">
+      <label for="usernameInputEdit">
         Username:
         <input id="usernameInputEdit" type="text" name="username" required />
-      </label> -->
-      <label for="emailInputEdit">
-        Email:
-        <input id="emailInputEdit" type="text" name="email" required />
       </label>
-      <!-- <label for="passwordInputEdit">
-        Password:
-        <input id="passwordInputEdit" type="password" name="password" required />
-      </label> -->
       <label for="nameInputEdit">
-        <div class="label-row">
-          <span>Name:</span>
-          <span id="aiMessage"></span>
-          <span class="tiny-btn" id="aiNameBtn">AI</span>
-          <span class="tiny-btn" id="noaiNameBtn">Random</span>
-        </div>
+        Display Name:
         <input id="nameInputEdit" type="text" name="name" required />
       </label>
       <label for="messageInputEdit">
@@ -57,11 +40,15 @@
         Bank Link:
         <input id="bankLinkInputEdit" type="text" name="bankLink" required />
       </label>
+      <label for="avatarLinkInputEdit">
+        Avatar Link:
+        <input id="avatarLinkInputEdit" type="text" name="avatarLink" />
+      </label>
       <button type="submit" class="btn">Save</button>
     </form>
     <div class="message" id="msgEdit">message</div>
   </div>
 
-  <script src="./edit.js"></script>
+  <script type="module" src="./edit.js"></script>
 </body>
 </html>

@@ -1,45 +1,81 @@
-import { secureRedirect } from './secure-redirect.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 
-const input = document.querySelector('.searchbox input');
+import {
+  getAuth,
+  onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+import {
+  getFirestore,
+  collection,
+  getDocs
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB9ekJy28TCq-CsQh3fb0ibyIgPZbEIpxo",
+  authDomain: "give-a-tip.firebaseapp.com",
+  projectId: "give-a-tip",
+  storageBucket: "give-a-tip.firebasestorage.app",
+  messagingSenderId: "177375336520",
+  appId: "1:177375336520:web:2f53a6f95dbe4b753d207d",
+  measurementId: "G-06X0NRB6H2"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+////////////////////////////////////////////////
+/////     activate searchbar animation     /////
+////////////////////////////////////////////////
+
+const searchInput = document.getElementById('searchInput');
 const inputBox = document.querySelector('.search-bar');
-// const btn = document.querySelector('.search-bar .btn');
 
-input.addEventListener('input', () => {
-  if(input.value !== '') {
+searchInput.addEventListener('input', () => {
+  if(searchInput.value !== '') {
     inputBox.classList.add('active');
-  } else if (!input.value) {
+  } else if (!searchInput.value) {
     inputBox.classList.remove('active');
   }
 });
 
-//////////////////////////
-/////     search     /////
-//////////////////////////
+/////////////////////////////
+/////     searching     /////
+/////////////////////////////
 
-const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
 
-// получаем список курьеров актуальных
+// получаем отфильтрованный список курьеров
 let couriers = [];
-async function fetchCouriers() {
-  try {
-    const res = await fetch('/api/couriers');
-    couriers = await res.json();
-  } catch (error) {
-    console.error('Failed to load couriers', error);
-  }
-}
 
-function showResults(query) {
-  const filtered = couriers.filter(el =>
-    el.name.toLowerCase().includes(query.toLowerCase())
-  );
-  if (filtered.length === 0) {
+let dbSnapshot = '';
+async function getSnapshot() {
+  dbSnapshot = await getDocs(collection(db, 'couriers'));
+}
+getSnapshot();
+
+async function showResults(query) {
+  couriers = []; // стираем список
+
+  // ищем курьеров по имени и создаём список
+  dbSnapshot.forEach(doc => {
+    const data = doc.data();
+    if(data.name.toLowerCase().includes(query.toLowerCase())) {
+      let courier = {};
+      courier.username = data.username;
+      courier.name = data.name;
+      couriers.push(courier);
+    }
+  });
+
+  if (couriers.length === 0) {
     searchResults.innerHTML = `Can't find courier... 😞`;
     inputBox.classList.add('empty');
   } else {
-    searchResults.innerHTML = filtered.map(el =>
-      `<a href="/profile.html?username=${el.username}">${el.name}</a>`
+    searchResults.innerHTML = couriers.map(el =>
+      `<a href="./profile.html?username=${el.username}">${el.name}</a>`
     ).join('');
     inputBox.classList.remove('empty');
   }
@@ -52,8 +88,6 @@ searchInput.addEventListener('input', event => {
       updateMask();
   }, 300);
 });
-
-fetchCouriers();
 
 /////////////////////////////////////////
 /////     dynamic mask gradient     /////
@@ -94,8 +128,20 @@ searchResults.addEventListener('scroll', updateMask);
 window.addEventListener('load', updateMask); // бесполезное, но пусть будет...
 window.addEventListener('resize', updateMask); // чтоб обновляло маску при изменении размера окна тоже
 
-///////////////////////////////////
-/////     secure redirect     /////
-///////////////////////////////////
 
-loginBtn.addEventListener('click', () => secureRedirect('/edit', '/login'));
+/////////////////////////////////
+/////    secure redirect    /////
+/////////////////////////////////
+
+loginBtn.addEventListener('click', () => secureRedirect('./edit.html', './login.html'));
+
+function secureRedirect(editLink, loginLink) {
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      window.location.href = editLink;
+    } else {
+      window.location.href = loginLink;
+    }
+  });
+}
+
