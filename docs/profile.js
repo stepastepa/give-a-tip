@@ -111,7 +111,7 @@ async function loadProfile() {
     <h1>${data.name}</h1>
     <p>${data.message}</p>
     <a href="${data.bankLink}" target="_blank" class="btn">Give a Tip</a>
-    <a class="close" href="${location.origin}"><img src="./images/chevron-left.svg"><span>Back</span></a>
+    <a class="close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
   `;
 }
 
