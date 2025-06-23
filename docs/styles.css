@@ -32,9 +32,13 @@
 
   width: 100%;
   z-index: 2;
+
+  pointer-events: none; /* mouse transparent */
 }
 
 .search-wrapper {
+  pointer-events: all; /* mouse active */
+
   display: flex;
   flex-direction: column;
   justify-content: center;
