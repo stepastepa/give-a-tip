@@ -55,7 +55,7 @@ async function loadProfile() {
   if (dbSnapshot.empty) {
     container.innerHTML = `
       <p>Oops. We can't find this courier now...</p>
-      <a class="close" href="${location.origin}"><img src="./images/chevron-left.svg"><span>Back</span></a>
+      <a class="close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
     `;
     return; // прерываем всё
   }
