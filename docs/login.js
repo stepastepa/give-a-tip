@@ -73,7 +73,7 @@ formReg.addEventListener('submit', async (e) => {
   try {
     await createUserWithEmailAndPassword(auth, payload.email, payload.password);
     // ✅ переходим на страницу edit.html
-    window.location.href = `/edit.html`;
+    window.location.href = `./edit.html`;
   } catch (err) {
     // переводим ошибки на человеческий язык
     let msg;
@@ -115,7 +115,7 @@ formLog.addEventListener('submit', async (e) => {
   try {
     await signInWithEmailAndPassword(auth, payload.email, payload.password);
     // ✅ переходим на страницу edit.html
-    window.location.href = `/edit.html`;
+    window.location.href = `./edit.html`;
   } catch (err) {
     messageLog.textContent = `${err.message}`;
     messageLog.classList.remove('active-success');

@@ -145,3 +145,13 @@ function secureRedirect(editLink, loginLink) {
   });
 }
 
+//////////////////////////////////////
+/////     iphone input scroll    /////
+//////////////////////////////////////
+
+// searchInput.addEventListener('focus', () => {
+//   console.log('7777');
+//   setTimeout(() => {
+//     searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//   }, 2000);
+// });
