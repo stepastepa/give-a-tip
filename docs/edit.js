@@ -47,7 +47,10 @@ onAuthStateChanged(auth, async (user) => {
       messageInputEdit.value = data.message || '';
       bankLinkInputEdit.value = data.bankLink || '';
     } else {
-      console.warn("Профиль не найден.");
+      console.warn("Profile is missing");
+      // создаём автоматический юзернейм из почты
+      let autoUsername = user.email.split('@')[0];
+      usernameInputEdit.value = autoUsername;
     }
   } else {
     window.location.href = './login.html';
