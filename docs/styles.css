@@ -15,6 +15,10 @@
   min-height: 100dvh;
 }
 
+.wrapper:has(.mobile.active) {
+  grid-template-rows: 1fr;
+}
+
 /* /////////////////////////////// */
 /* /////////////////////////////// */
 #logo {
@@ -173,11 +177,17 @@ img {
   padding: 0.8rem;
 }
 
+.wrapper:has(.mobile) .search-wrapper:has(input:focus) .search-icon,
+.wrapper:has(.mobile) .search-bar.active .search-icon {
+  padding: 1rem;
+}
+
 /* /////////////////////////////// */
 /* /////////////////////////////// */
 
 .search-bar.mobile.active~.courier-bar{
   display: none;
+  grid-row: 1;
 }
 
 .courier-bar {

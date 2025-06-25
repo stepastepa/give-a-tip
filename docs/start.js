@@ -62,12 +62,19 @@ function onKeyboardChange() {
   inputBox.style.setProperty('--result-height', `calc(${visibleHeight}px - 2rem - (1.5rem + 2rem))`);
 }
 
-// Слежение за клавиатурой
+// Следим за появляющейся клавиатурой
 if (window.visualViewport) {
   window.visualViewport.addEventListener('resize', onKeyboardChange);
 } else {
   window.addEventListener('resize', onKeyboardChange);
 }
+
+// рассчитываем высоту при написании поискового запроса
+searchInput.addEventListener('input', () => {
+  if(searchInput.value !== '') {
+    onKeyboardChange();
+  }
+});
 
 /////////////////////////////
 /////     searching     /////
