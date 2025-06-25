@@ -59,7 +59,7 @@ function getVisibleHeight() {
 
 function onKeyboardChange() {
   const visibleHeight = getVisibleHeight();
-  inputBox.style.setProperty('--result-height', `${visibleHeight}px`);
+  inputBox.style.setProperty('--result-height', `calc(${visibleHeight}px - 2rem - (1.5rem + 2rem))`);
 }
 
 // Слежение за клавиатурой
