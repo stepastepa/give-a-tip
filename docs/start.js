@@ -46,7 +46,7 @@ const isProbablyMobileWithKeyboard = () =>
   /iPhone|Android|Mobile|iPad/i.test(navigator.userAgent);
 
 if (isProbablyMobileWithKeyboard()) {
-  inputBox.classList.add('.mobile');
+  inputBox.classList.add('mobile');
 }
 
 /////////////////////////////
