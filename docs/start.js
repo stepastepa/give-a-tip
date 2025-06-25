@@ -49,6 +49,26 @@ if (isProbablyMobileWithKeyboard()) {
   inputBox.classList.add('mobile');
 }
 
+// высота видимой области браузера с включенной клавиатурой
+function getVisibleHeight() {
+  if (window.visualViewport) {
+    return window.visualViewport.height;
+  }
+  return window.innerHeight;
+}
+
+function onKeyboardChange() {
+  const visibleHeight = getVisibleHeight();
+  inputBox.style.setProperty('--result-height', `${visibleHeight}px`);
+}
+
+// Слежение за клавиатурой
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', onKeyboardChange);
+} else {
+  window.addEventListener('resize', onKeyboardChange);
+}
+
 /////////////////////////////
 /////     searching     /////
 /////////////////////////////
