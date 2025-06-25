@@ -16,7 +16,8 @@
   overflow: hidden;
 }
 
-.wrapper:has(.mobile.active) {
+.wrapper:has(.mobile.active),
+.wrapper:has(.mobile input:focus) {
   grid-template-rows: 1fr;
 }
 
@@ -186,7 +187,8 @@ img {
 /* /////////////////////////////// */
 /* /////////////////////////////// */
 
-.search-bar.mobile.active~.courier-bar{
+.search-bar.mobile.active~.courier-bar,
+.search-bar.mobile:has(input:focus)~.courier-bar{
   display: none;
   grid-row: 1;
 }
