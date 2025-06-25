@@ -12,7 +12,8 @@
   /* background: linear-gradient(to top, white, skyblue); */
   background-color: var(--light-bg);
   color: var(--dark-color);
-  height: 100dvh;
+  --height: 100dvh;
+  height: var(--height);
   overflow: hidden;
 }
 

@@ -32,6 +32,7 @@ const db = getFirestore(app);
 
 const searchInput = document.getElementById('searchInput');
 const inputBox = document.querySelector('.search-bar');
+const mainWrapper = document.querySelector('.wrapper');
 
 searchInput.addEventListener('input', () => {
   if(searchInput.value !== '') {
@@ -59,7 +60,8 @@ function getVisibleHeight() {
 
 function onKeyboardChange() {
   const visibleHeight = getVisibleHeight();
-  inputBox.style.setProperty('--result-height', `calc(${visibleHeight}px - 2rem - (1.5rem + 2rem))`);
+  mainWrapper.style.setProperty('--result-height', `calc(${visibleHeight}px - 2rem - (1.5rem + 2rem))`);
+  mainWrapper.style.setProperty('--height', `${visibleHeight}px`);
 }
 
 // Следим за появляющейся клавиатурой
@@ -69,11 +71,9 @@ if (window.visualViewport) {
   window.addEventListener('resize', onKeyboardChange);
 }
 
-// рассчитываем высоту при написании поискового запроса
-searchInput.addEventListener('input', () => {
-  if(searchInput.value !== '') {
-    onKeyboardChange();
-  }
+// рассчитываем высоту экрана (с клавиатурой) при нажатии на поиск
+searchInput.addEventListener('focus', () => {
+  onKeyboardChange();
 });
 
 /////////////////////////////
