@@ -13,6 +13,7 @@
   background-color: var(--light-bg);
   color: var(--dark-color);
   height: 100dvh;
+  overflow: hidden;
 }
 
 .wrapper:has(.mobile.active) {
