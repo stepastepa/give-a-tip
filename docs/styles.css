@@ -18,6 +18,7 @@ body {
   --height: 100dvh;
   height: var(--height);
   overflow: hidden;
+  overscroll-behavior-block: contain;
 }
 
 .wrapper:has(.mobile.active),
