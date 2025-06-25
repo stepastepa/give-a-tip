@@ -41,6 +41,14 @@ searchInput.addEventListener('input', () => {
   }
 });
 
+const isProbablyMobileWithKeyboard = () =>
+  'ontouchstart' in window &&
+  /iPhone|Android|Mobile|iPad/i.test(navigator.userAgent);
+
+if (isProbablyMobileWithKeyboard()) {
+  inputBox.classList.add('.mobile');
+}
+
 /////////////////////////////
 /////     searching     /////
 /////////////////////////////
