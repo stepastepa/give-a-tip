@@ -113,7 +113,7 @@
   overflow-x: hidden;
   animation: opening 0.3s ease-in-out forwards; /* надо проверять время обновления маски в start.js чтоб секунды были одинаковые */
 }
-.search-bar {
+.wrapper {
   --result-height: calc(80dvh - 2rem - (1.5rem + 2rem));
 }
 @keyframes opening {
