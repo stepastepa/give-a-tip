@@ -60,6 +60,9 @@
 .search-bar.active .search-wrapper{
   transform: translateY(0);
 }
+.search-bar.mobile .search-wrapper:has(input:focus) {
+  transform: translateY(0);
+}
 
 .search-wrapper:has(input:focus),
 .search-bar.active .search-wrapper {
