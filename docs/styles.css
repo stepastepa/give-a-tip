@@ -12,7 +12,7 @@
   /* background: linear-gradient(to top, white, skyblue); */
   background-color: var(--light-bg);
   color: var(--dark-color);
-  height: 100dvh;
+  min-height: 100dvh;
 }
 
 /* /////////////////////////////// */
