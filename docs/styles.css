@@ -17,8 +17,8 @@ body {
   color: var(--dark-color);
   --height: 100dvh;
   height: var(--height);
-  overflow: hidden;
-  overscroll-behavior-block: contain;
+  /* overflow: hidden; */
+  /* overscroll-behavior-block: contain; */
 }
 
 .wrapper:has(.mobile.active),
@@ -86,6 +86,7 @@ body {
 .result {
   flex: 0 0 auto;
   display: none;
+  overscroll-behavior-block: contain;
 }
 .search-bar.active .result {
   display: flex;
