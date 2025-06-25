@@ -51,7 +51,10 @@
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
 }
-.search-bar:not(.mobile) .search-wrapper{
+.search-bar.mobile .search-wrapper {
+  transition: none;
+}
+.search-bar .search-wrapper{
   transform: translateY(calc(((80dvh / 2) - 1rem) - 50%));
 }
 .search-bar.active .search-wrapper{
