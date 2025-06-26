@@ -41,7 +41,7 @@ searchInput.addEventListener('input', () => {
     inputBox.classList.remove('active');
   }
 });
-
+/*
 const isProbablyMobileWithKeyboard = () =>
   'ontouchstart' in window &&
   /iPhone|Android|Mobile|iPad/i.test(navigator.userAgent);
@@ -75,7 +75,7 @@ if (window.visualViewport) {
 searchInput.addEventListener('focus', () => {
   onKeyboardChange();
 });
-
+*/
 //////////////////////////////////////////////////
 // скрываем экранную клавиатуру при скролле
 let lastScrollY = window.scrollY;

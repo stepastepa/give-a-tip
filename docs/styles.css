@@ -131,6 +131,9 @@ body:has(.mobile input:focus) {
 .wrapper {
   --result-height: calc(80dvh - 2rem - (1.5rem + 2rem));
 }
+.wrapper:has(.mobile) {
+  --result-height: calc(100dvh - 2rem - (1.5rem + 2rem));
+}
 @keyframes opening {
   from {
     max-height: 0;
