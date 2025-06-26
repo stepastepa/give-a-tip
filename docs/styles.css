@@ -13,6 +13,7 @@ body:has(.mobile input:focus) {
   overscroll-behavior: none;
   height: 100%;
   overflow: hidden;
+  position: fixed;
 }
 
 .wrapper {
