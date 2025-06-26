@@ -9,7 +9,8 @@ console.log(username);
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 
 import {
-  getAuth
+  getAuth,
+  onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 import {
@@ -116,3 +117,21 @@ async function loadProfile() {
 }
 
 loadProfile();
+
+//////////////////////////////////////
+/////    secure link redirect    /////
+//////////////////////////////////////
+
+let optionBtnLink = document.querySelector('#optionBtn a');
+
+optionBtnLink.addEventListener('click', () => secureRedirectLink('./edit.html', './login.html'));
+
+function secureRedirectLink(editLink, loginLink) {
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      optionBtnLink.href = editLink;
+    } else {
+      optionBtnLink.href = loginLink;
+    }
+  });
+}
