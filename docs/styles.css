@@ -7,6 +7,12 @@
   overflow: hidden;
 } */
 
+/* disable scrolling, если активна срока поиска */
+html:has(.mobile input:focus),
+body:has(.mobile input:focus) {
+  overscroll-behavior: none;
+}
+
 .wrapper {
   display: grid;
   grid-template-rows: 4fr 1fr;
