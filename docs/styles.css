@@ -10,7 +10,9 @@
 /* disable scrolling, если активна срока поиска */
 html:has(.mobile input:focus),
 body:has(.mobile input:focus) {
-  overscroll-behavior: none;
+  /* overscroll-behavior: none; */
+  height: 100%;
+  overflow: hidden;
 }
 
 .wrapper {
