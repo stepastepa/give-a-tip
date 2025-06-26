@@ -76,6 +76,20 @@ searchInput.addEventListener('focus', () => {
   onKeyboardChange();
 });
 
+//////////////////////////////////////////////////
+// скрываем экранную клавиатуру при скролле
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  // Проверим: есть ли активный элемент (и это input или textarea)
+  const active = document.activeElement;
+  if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+    active.blur(); // Снимет фокус, скроет клавиатуру
+  }
+
+  lastScrollY = window.scrollY;
+}, { passive: true });
+
 /////////////////////////////
 /////     searching     /////
 /////////////////////////////

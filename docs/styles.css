@@ -8,14 +8,14 @@
 } */
 
 /* disable scrolling, если активна срока поиска */
-html:has(.mobile input:focus),
+/* html:has(.mobile input:focus),
 body:has(.mobile input:focus) {
   overscroll-behavior: none;
   height: 100%;
   width: 100%;
   overflow: hidden;
   position: fixed;
-}
+} */
 
 .wrapper {
   display: grid;
