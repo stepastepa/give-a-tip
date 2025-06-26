@@ -41,7 +41,7 @@ searchInput.addEventListener('input', () => {
     inputBox.classList.remove('active');
   }
 });
-/*
+
 const isProbablyMobileWithKeyboard = () =>
   'ontouchstart' in window &&
   /iPhone|Android|Mobile|iPad/i.test(navigator.userAgent);
@@ -49,7 +49,7 @@ const isProbablyMobileWithKeyboard = () =>
 if (isProbablyMobileWithKeyboard()) {
   inputBox.classList.add('mobile');
 }
-
+/*
 // высота видимой области браузера с включенной клавиатурой
 function getVisibleHeight() {
   if (window.visualViewport) {
