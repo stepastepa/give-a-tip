@@ -6,6 +6,7 @@
 
 body {
   height: auto;
+  min-height: 100%;
   padding: 1rem;
   background-color: var(--light-bg);
   color: var(--dark-color);
@@ -31,6 +32,7 @@ body {
   gap: 1rem;
 
   margin-top: 3rem;
+  margin-bottom: 3rem;
   overflow: hidden;
 }
 
@@ -41,6 +43,16 @@ body {
   
   /* background-color: bisque; */
 }
+#editForm.hidden {
+  display: none;
+}
+body:has(.active) {
+  align-items: center;
+}
+.edit-card:has(.active) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
 .edit-card label {
   font-size: 1rem;
@@ -49,6 +61,19 @@ body {
   flex-direction: column;
   gap: 0.4rem;
 }
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.input-row input {
+  flex: 1 1 auto;
+}
+.input-row button {
+  flex: 0 0 auto;
+}
+
 .edit-card input {
   padding: 0.75rem 1rem;
   font-size: 1rem;
@@ -76,6 +101,7 @@ body {
     padding-top: 4rem;
     min-height: 100dvh;
     margin-top: 0;
+    margin-bottom: 0;
   }
 }
 
@@ -85,4 +111,37 @@ body {
 }
 .edit-card.incorrect label:has(#nameInputEdit) {
   color: crimson;
+}
+
+.qr-container {
+  display: none;
+}
+
+.qr-container.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.qr-container canvas {
+  width: 100%;
+}
+
+.qr-container h1 {
+  line-height: 1.2;
+  font-size: 2rem;
+  text-align: center;
+}
+.qr-container p {
+  color: var(--light-color);
+  font-size: 1.1rem;
+  font-weight: 200;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: -0.5rem;
 }

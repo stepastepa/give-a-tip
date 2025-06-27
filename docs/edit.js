@@ -46,6 +46,9 @@ onAuthStateChanged(auth, async (user) => {
       nameInputEdit.value = data.name || '';
       messageInputEdit.value = data.message || '';
       bankLinkInputEdit.value = data.bankLink || '';
+      // qr code display
+      courierName.innerText = data.name;
+      courierMessage.innerText = data.message;
     } else {
       console.warn("Profile is missing");
       // создаём автоматический юзернейм из почты
@@ -111,4 +114,77 @@ form.addEventListener('submit', async (e) => {
 optionBtn.addEventListener('click', async () => {
   await signOut(auth);
   // window.location.href = '/'; // авто редирект на главную, но я решил по ссылке сделать его
+});
+
+///////////////////////////////////
+/////   QR code generation    /////
+///////////////////////////////////
+
+// Минималистичная библиотека QR генерации (QR Code generator v1)
+// Взята из проекта: https://github.com/nayuki/QR-Code-generator (адаптирована)
+class QR {
+  static generate(text, size = 512) {
+    const canvas = document.getElementById('qrCode');
+    const ctx = canvas.getContext('2d');
+    const qr = QR._encode(text);
+    const cellSize = Math.floor(size / qr.length);
+    const margin = (size - cellSize * qr.length) / 2;
+
+    canvas.width = canvas.height = size;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = '#000000';
+
+    for (let y = 0; y < qr.length; y++) {
+      for (let x = 0; x < qr.length; x++) {
+        if (qr[y][x]) {
+          ctx.fillRect(margin + x * cellSize, margin + y * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+  }
+
+  static _encode(text) {
+    // Используем готовую библиотеку qrcode-generator (встроено)
+    const qr = qrcode(0, 'L');
+    qr.addData(text);
+    qr.make();
+    const size = qr.getModuleCount();
+    const data = [];
+    for (let r = 0; r < size; r++) {
+      const row = [];
+      for (let c = 0; c < size; c++) {
+        row.push(qr.isDark(r, c));
+      }
+      data.push(row);
+    }
+    return data;
+  }
+}
+
+// Вставляем библиотеку qrcode-generator (CDN)
+// const script = document.createElement('script');
+// script.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+// script.onload = () => console.log('QR Library Loaded');
+// document.head.appendChild(script);
+
+///////////////////////////////////
+const qrContainer = document.querySelector('.qr-container');
+
+function generateQRCode() {
+  const bankLinkText = document.getElementById('bankLinkInputEdit').value;
+  if (!bankLinkText.trim()) return; // terminate if empty
+  QR.generate(bankLinkText);
+}
+
+qrCodeBtn.addEventListener('click', ()=>{
+  if(!bankLinkInputEdit.value.trim()) return; // terminate if empty
+  generateQRCode();
+  qrContainer.classList.add('active');
+  editForm.classList.add('hidden');
+});
+
+qrContainer.addEventListener('click', ()=>{
+  qrContainer.classList.remove('active');
+  editForm.classList.remove('hidden');
 });
