@@ -123,7 +123,7 @@ optionBtn.addEventListener('click', async () => {
 // Минималистичная библиотека QR генерации (QR Code generator v1)
 // Взята из проекта: https://github.com/nayuki/QR-Code-generator (адаптирована)
 class QR {
-  static generate(text, size = 512) {
+  static generate(text, size = 2048) {
     const canvas = document.getElementById('qrCode');
     const ctx = canvas.getContext('2d');
     const qr = QR._encode(text);
