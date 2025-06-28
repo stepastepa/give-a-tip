@@ -24,14 +24,14 @@
 
     <div id="loginContainer" class="tab-content active">
       <form id="loginForm">
-        <label for="emailInput">
-          Email:
+        <div class="form-group">
+          <label for="emailInput">Email:</label>
           <input id="emailInput" type="text" name="email" required />
-        </label>
-        <label for="passwordInput">
-          Password:
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password:</label>
           <input id="passwordInput" type="password" name="password" required />
-        </label>
+        </div>
         <button type="submit" class="btn">Sign in</button>
       </form>
       <div class="message" id="msgLog">123</div>
@@ -39,18 +39,18 @@
 
     <div id="registerContainer" class="tab-content">
       <form id="registerForm">
-        <label for="emailInputReg">
-          Email:
+        <div class="form-group">
+          <label for="emailInputReg">Email:</label>
           <input id="emailInputReg" type="text" name="email" required />
-        </label>
-        <label for="passwordInputReg">
-          Password:
+        </div>
+        <div class="form-group">
+          <label for="passwordInputReg">Password:</label>
           <input id="passwordInputReg" type="password" name="password" required />
-        </label>
-        <label for="confirmPasswordInputReg">
-          Confirm Password:
+        </div>
+        <div class="form-group">
+          <label for="confirmPasswordInputReg">Confirm Password:</label>
           <input id="confirmPasswordInputReg" type="password" name="confirmPassword" required />
-        </label>
+        </div>
         <button type="submit" class="btn">Register</button>
       </form>
       <div class="message" id="msgReg">message</div>
