@@ -78,7 +78,7 @@ searchInput.addEventListener('focus', () => {
 */
 //////////////////////////////////////////////////
 // скрываем экранную клавиатуру при скролле
-let lastScrollY = window.scrollY;
+// let lastScrollY = window.scrollY;
 
 function removeInputFocusOnScroll() {
   // Проверим: есть ли активный элемент (и это input или textarea)
@@ -87,7 +87,7 @@ function removeInputFocusOnScroll() {
     active.blur(); // Снимет фокус, скроет клавиатуру
   }
 
-  lastScrollY = window.scrollY;
+  // lastScrollY = window.scrollY;
 }
 
 // скролл всей страницы
