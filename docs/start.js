@@ -80,7 +80,7 @@ searchInput.addEventListener('focus', () => {
 // скрываем экранную клавиатуру при скролле
 let lastScrollY = window.scrollY;
 
-window.addEventListener('scroll', () => {
+function removeInputFocusOnScroll() {
   // Проверим: есть ли активный элемент (и это input или textarea)
   const active = document.activeElement;
   if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
@@ -88,6 +88,15 @@ window.addEventListener('scroll', () => {
   }
 
   lastScrollY = window.scrollY;
+}
+
+// скролл всей страницы
+window.addEventListener('scroll', () => {
+  removeInputFocusOnScroll();
+}, { passive: true });
+// скролл элемента с результатом поиска
+searchResults.addEventListener('scroll', () => {
+  removeInputFocusOnScroll();
 }, { passive: true });
 
 /////////////////////////////
@@ -193,14 +202,3 @@ function secureRedirect(editLink, loginLink) {
     }
   });
 }
-
-//////////////////////////////////////
-/////     iphone input scroll    /////
-//////////////////////////////////////
-
-// searchInput.addEventListener('focus', () => {
-//   console.log('7777');
-//   setTimeout(() => {
-//     searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-//   }, 2000);
-// });
