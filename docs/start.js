@@ -25,6 +25,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+const searchResults = document.getElementById('searchResults');
 
 ////////////////////////////////////////////////
 /////     activate searchbar animation     /////
@@ -99,8 +103,6 @@ searchResults.addEventListener('scroll', () => {
 /////////////////////////////
 /////     searching     /////
 /////////////////////////////
-
-const searchResults = document.getElementById('searchResults');
 
 // получаем отфильтрованный список курьеров
 let couriers = [];
