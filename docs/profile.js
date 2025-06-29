@@ -108,12 +108,32 @@ async function loadProfile() {
 
   // собираем профиль из полученных данных
   container.innerHTML = `
-    <div class="avatar">${avatarImg}</div>
-    <h1>${data.name}</h1>
-    <p>${data.message}</p>
-    <a href="${data.bankLink}" target="_blank" class="btn">Give a Tip</a>
-    <a class="close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
+    <div id="profileData">
+      <div class="avatar">${avatarImg}</div>
+      <h1>${data.name}</h1>
+      <p>${data.message}</p>
+      <a href="${data.bankLink}" target="_blank" class="btn">Give a Tip</a>
+    </div>
+    <div class="button-container">
+      <a class="light-btn close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
+      <div class="light-btn qr-btn" id="qrCodeBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" fill="currentColor"></rect>
+          <rect x="14" y="3" width="7" height="7" fill="currentColor"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7" fill="currentColor"></rect>
+        </svg>
+      </div>
+    </div>
+    <div class="qr-container">
+      <canvas id="qrCode"></canvas>
+      <p>${data.bankLink}</p>
+    </div>
   `;
+
+  let bankLink =  data.bankLink;
+  // QR code button setup
+  qrCodeButtonSetup(bankLink);
 }
 
 loadProfile();
@@ -133,5 +153,81 @@ function secureRedirectLink(editLink, loginLink) {
     } else {
       optionBtnLink.href = loginLink;
     }
+  });
+}
+
+///////////////////////////////////
+/////   QR code generation    /////
+///////////////////////////////////
+
+// Минималистичная библиотека QR генерации (QR Code generator v1)
+// Взята из проекта: https://github.com/nayuki/QR-Code-generator (адаптирована)
+class QR {
+  static generate(text, size = 2048) {
+    const canvas = document.getElementById('qrCode');
+    const ctx = canvas.getContext('2d');
+    const qr = QR._encode(text);
+    const cellSize = Math.floor(size / qr.length);
+    const margin = (size - cellSize * qr.length) / 2;
+
+    canvas.width = canvas.height = size;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = '#000000';
+
+    for (let y = 0; y < qr.length; y++) {
+      for (let x = 0; x < qr.length; x++) {
+        if (qr[y][x]) {
+          ctx.fillRect(margin + x * cellSize, margin + y * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+  }
+
+  static _encode(text) {
+    // Используем готовую библиотеку qrcode-generator (встроено)
+    const qr = qrcode(0, 'L');
+    qr.addData(text);
+    qr.make();
+    const size = qr.getModuleCount();
+    const data = [];
+    for (let r = 0; r < size; r++) {
+      const row = [];
+      for (let c = 0; c < size; c++) {
+        row.push(qr.isDark(r, c));
+      }
+      data.push(row);
+    }
+    return data;
+  }
+}
+
+// Вставляем библиотеку qrcode-generator (CDN)
+// const script = document.createElement('script');
+// script.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+// script.onload = () => console.log('QR Library Loaded');
+// document.head.appendChild(script);
+
+///////////////////////////////////
+
+function generateQRCode(xxx) {
+  if (!xxx) return; // terminate if empty
+  QR.generate(xxx);
+}
+
+function qrCodeButtonSetup(bankLink) {
+  let qrContainer = document.querySelector('.qr-container');
+  let qrCodeBtn = document.querySelector('#qrCodeBtn');
+
+  qrCodeBtn.addEventListener('click', ()=>{
+    if(!bankLink) return; // terminate if empty
+    generateQRCode(bankLink);
+    qrContainer.classList.add('active');
+    // profileData.classList.add('hidden');
+  });
+
+  qrContainer.addEventListener('click', ()=>{
+    qrContainer.classList.remove('active');
+    // profileData.classList.remove('hidden');
   });
 }

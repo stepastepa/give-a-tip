@@ -23,13 +23,26 @@
   </div>
 
   <div class="profile-card loading" id="profile">
-    <div class="avatar loading"></div>
-    <h1 class="loading"></h1>
-    <p class="loading"></p>
-    <div href="" target="_blank" class="btn loading"></div>
-    <a class="close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
+    <div id="profileData">
+      <div class="avatar loading"></div>
+      <h1 class="loading"></h1>
+      <p class="loading"></p>
+      <div href="" target="_blank" class="btn loading"></div>
+    </div>
+    <div class="button-container">
+      <a class="light-btn close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
+      <div class="light-btn qr-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" fill="currentColor"></rect>
+          <rect x="14" y="3" width="7" height="7" fill="currentColor"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7" fill="currentColor"></rect>
+        </svg>
+      </div>
+    </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
   <script type="module" src="./profile.js"></script>
 </body>
 </html>

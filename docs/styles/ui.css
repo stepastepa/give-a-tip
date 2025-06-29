@@ -80,21 +80,22 @@ html {
   opacity: 0.5;
 }
 
-.input-row-btn {
-  width: 2.5rem;
-  height: 2.5rem;
+.light-btn {
+  padding: 0.5rem;
+  color: var(--light-color);
+  border: 1px solid var(--light-border-color);
+  border-radius: 1rem;
   font-size: 1rem;
   line-height: 1;
+
+  cursor: pointer;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: red; */
-  color: var(--dark-color);
-  cursor: pointer;
 }
-.input-row-btn:hover {
-  border-radius: 0.75rem;
-  background-color: var(--light-bg);
+.light-btn:hover {
+  border: 1px solid var(--light-border-color-hover);
 }
 
 /*//////////  Forms  //////////*/
