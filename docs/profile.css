@@ -98,21 +98,19 @@ p.error {
   margin: 0;
 }
 
-.close {
+.button-container {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(0, -130%);
-
-  padding: 0.5rem 1rem 0.5rem 0.5rem;
-  text-decoration: none;
-}
-
-.qr-btn {
-  position: absolute;
-  top: 0;
   right: 0;
   transform: translate(0, -130%);
+  display: flex;
+  justify-content: space-between;
+}
+
+.close {
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  text-decoration: none;
 }
 
 @media (max-width: 400px) {
@@ -143,19 +141,15 @@ p.error {
   }
 
   .button-container {
+    position: relative;
+    inset: auto;
+    transform: translate(0, 0);
+
     margin-top: auto;
     margin-bottom: auto;
     display: flex;
     justify-content: center;
     gap: 1rem;
-  }
-
-  .close, .light-btn {
-    position: relative;
-    inset: auto;
-    transform: translate(0, 0);
-    margin-top: 0;
-    margin-bottom: 0;
   }
 }
 
