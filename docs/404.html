@@ -2,18 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Give a tip - Redirect</title>
-
-  <!-- SPA-routing - redirect to profile.html -->
+  <title>Give a tip - 404 Redirect</title>
   <script>
-    const path = window.location.pathname.replace('/give-a-tip/', '');
-    if (path) {
-      window.location.replace(
-        `/give-a-tip/profile.html?username=${path}`
-      );
-    }
+    window.location = '/';
   </script>
 </head>
 <body>
+  <p>404 - Redirect</p>
 </body>
 </html>
