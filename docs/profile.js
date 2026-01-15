@@ -1,10 +1,5 @@
-// const params = new URLSearchParams(window.location.search);
-// const username = params.get("username"); // получаем юзернейм из ссылки
-
-// 1. Берем путь из адресной строки (например, "/alex")
 const path = window.location.pathname;
-// 2. Убираем лишний слеш в начале, чтобы осталось только "alex"
-const username = path.split('/')[1]; 
+const username = path.split('/')[1]; // убираем "/" из строки "/username"
 console.log(username);
 
 ///////////////////////////////////
