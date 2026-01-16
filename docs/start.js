@@ -132,7 +132,7 @@ async function showResults(query) {
     inputBox.classList.add('empty');
   } else {
     searchResults.innerHTML = couriers.map(el =>
-      `<a href="./profile.html?username=${el.username}">${el.name}</a>`
+      `<a href="./${el.username}">${el.name}</a>` // new clean urls
     ).join('');
     inputBox.classList.remove('empty');
   }
