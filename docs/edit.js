@@ -82,7 +82,7 @@ form.addEventListener('submit', async (e) => {
       avatarLink: payload.avatarLink,
       createdAt: Date.now()
     });
-    window.location.href = `./profile.html?username=${payload.username}`;
+    window.location.href = `./${payload.username}`; // new clean url
   } catch (err) {
     msg.textContent = `${err.message}`;
     msg.classList.add('active-error');
