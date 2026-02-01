@@ -45,7 +45,8 @@ onAuthStateChanged(auth, async (user) => {
       usernameInputEdit.value = data.username || '';
       nameInputEdit.value = data.name || '';
       messageInputEdit.value = data.message || '';
-      bankLinkInputEdit.value = data.bankLink || '';
+      btnLabelInputEdit.value = data.buttonLabel || '';
+      btnLinkInputEdit.value = data.buttonLink || '';
       // qr code display
       courierName.innerText = data.name;
       courierMessage.innerText = data.message;
@@ -78,7 +79,8 @@ form.addEventListener('submit', async (e) => {
       username: payload.username,
       name: payload.name,
       message: payload.message,
-      bankLink: payload.bankLink,
+      buttonLabel: payload.buttonLabel,
+      buttonLink: payload.buttonLink,
       avatarLink: payload.avatarLink,
       createdAt: Date.now()
     });
