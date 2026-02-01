@@ -47,9 +47,6 @@ onAuthStateChanged(auth, async (user) => {
       messageInputEdit.value = data.message || '';
       btnLabelInputEdit.value = data.buttonLabel || '';
       btnLinkInputEdit.value = data.buttonLink || '';
-      // qr code display
-      // courierName.innerText = data.name;
-      // courierMessage.innerText = data.message;
     } else {
       console.warn("Profile is missing");
       // создаём автоматический юзернейм из почты
@@ -84,7 +81,7 @@ form.addEventListener('submit', async (e) => {
       avatarLink: payload.avatarLink,
       createdAt: Date.now()
     });
-    window.location.href = `./${payload.username}`; // new clean url
+    window.location.href = `./${payload.username}`; // redirect to new clean url
   } catch (err) {
     msg.textContent = `${err.message}`;
     msg.classList.add('active-error');
