@@ -62,6 +62,10 @@ async function loadProfile() {
   
   const data = dbSnapshot.docs[0].data();
 
+  // data for button and QR code
+  let buttonLink = data.buttonLink || data.bankLink;
+  let buttonLabel = data.buttonLabel || "Give a Tip";
+
   //////////////////////////////////////////////////////////////////////
   // default avatar generation
   //////////////////////////////////////////////////////////////////////
@@ -111,7 +115,7 @@ async function loadProfile() {
       <div class="avatar">${avatarImg}</div>
       <h1>${data.name}</h1>
       <p>${data.message}</p>
-      <a href="${data.buttonLink}" target="_blank" class="btn">${data.buttonLabel}</a>
+      <a href="${buttonLink}" target="_blank" class="btn">${buttonLabel}</a>
     </div>
     <div class="button-container">
       <a class="light-btn close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
@@ -126,13 +130,12 @@ async function loadProfile() {
     </div>
     <div class="qr-container">
       <canvas id="qrCode"></canvas>
-      <p>${data.buttonLink}</p>
+      <p>${buttonLink}</p>
     </div>
   `;
 
-  let bankLink =  data.buttonLink;
   // QR code button setup
-  qrCodeButtonSetup(bankLink);
+  qrCodeButtonSetup(buttonLink);
 }
 
 loadProfile();
