@@ -48,8 +48,8 @@ onAuthStateChanged(auth, async (user) => {
       btnLabelInputEdit.value = data.buttonLabel || '';
       btnLinkInputEdit.value = data.buttonLink || '';
       // qr code display
-      courierName.innerText = data.name;
-      courierMessage.innerText = data.message;
+      // courierName.innerText = data.name;
+      // courierMessage.innerText = data.message;
     } else {
       console.warn("Profile is missing");
       // создаём автоматический юзернейм из почты

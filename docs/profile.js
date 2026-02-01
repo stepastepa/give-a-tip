@@ -111,7 +111,7 @@ async function loadProfile() {
       <div class="avatar">${avatarImg}</div>
       <h1>${data.name}</h1>
       <p>${data.message}</p>
-      <a href="${data.bankLink}" target="_blank" class="btn">Give a Tip</a>
+      <a href="${data.buttonLink}" target="_blank" class="btn">${data.buttonLabel}</a>
     </div>
     <div class="button-container">
       <a class="light-btn close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
@@ -126,11 +126,11 @@ async function loadProfile() {
     </div>
     <div class="qr-container">
       <canvas id="qrCode"></canvas>
-      <p>${data.bankLink}</p>
+      <p>${data.buttonLink}</p>
     </div>
   `;
 
-  let bankLink =  data.bankLink;
+  let bankLink =  data.buttonLink;
   // QR code button setup
   qrCodeButtonSetup(bankLink);
 }
