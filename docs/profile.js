@@ -21,7 +21,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB9ekJy28TCq-CsQh3fb0ibyIgPZbEIpxo",
+  apiKey: "AIzaSyClOhEXpKSOHjyhdXm9vrWi-XvBPP8OpJM",
   authDomain: "give-a-tip.firebaseapp.com",
   projectId: "give-a-tip",
   storageBucket: "give-a-tip.firebasestorage.app",
