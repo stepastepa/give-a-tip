@@ -45,8 +45,18 @@ onAuthStateChanged(auth, async (user) => {
       usernameInputEdit.value = data.username || '';
       nameInputEdit.value = data.name || '';
       messageInputEdit.value = data.message || '';
-      btnLabelInputEdit.value = data.buttonLabel || '';
-      btnLinkInputEdit.value = data.buttonLink || '';
+
+      // first button setup
+      btnLabelInputEdit.value = data.buttonLabel[0] || '';
+      btnLinkInputEdit.value = data.buttonLink[0] || '';
+      // generate html for additional buttons
+      if (data.buttonLabel.length > 1) {
+        for (let i = 2; i <= data.buttonLabel.length; i++) {
+          addButtonFields(i);
+          document.querySelector(`#btnLabelInputEdit-${i}`).value = data.buttonLabel[i-1];
+          document.querySelector(`#btnLinkInputEdit-${i}`).value = data.buttonLink[i-1];
+        }
+      }
     } else {
       console.warn("Profile is missing");
       // создаём автоматический юзернейм из почты
@@ -71,13 +81,17 @@ form.addEventListener('submit', async (e) => {
   const formData = new FormData(form);
   const payload = Object.fromEntries(formData.entries());
 
+  // собираем инфо про кнопки
+  let buttonLabels = collectByPrefix(payload, 'buttonLabel');
+  let buttonLinks  = collectByPrefix(payload, 'buttonLink');
+
   try {
     await setDoc(doc(db, 'couriers', auth.currentUser.uid), { // uid в профиле для связи аккаунта и данных, чтоб искать прямо по uid сразу!!!
       username: payload.username,
       name: payload.name,
       message: payload.message,
-      buttonLabel: payload.buttonLabel,
-      buttonLink: payload.buttonLink,
+      buttonLabel: buttonLabels,
+      buttonLink: buttonLinks,
       avatarLink: payload.avatarLink,
       createdAt: Date.now()
     });
@@ -114,3 +128,54 @@ optionBtn.addEventListener('click', async () => {
   await signOut(auth);
   // window.location.href = '/'; // авто редирект на главную, но я решил по ссылке сделать его
 });
+
+///////////////////////////
+/////   add button    /////
+///////////////////////////
+
+addBtn.addEventListener('click', () => {
+  let i = buttonsList.children.length;
+  i++;
+  console.log(`button field ${i}`);
+  addButtonFields(i);
+});
+
+// function addButtonFields(i) {
+//   buttonsList.innerHTML += `
+//   <div class="form-group btn-group">
+//     <label for="btnLabelInputEdit-${i}">Button ${i} Label:</label>
+//     <input id="btnLabelInputEdit-${i}" type="text" name="buttonLabel-${i}"/>
+//     <label for="btnLinkInputEdit-${i}">Button ${i} Link:</label>
+//     <input id="btnLinkInputEdit-${i}" type="text" name="buttonLink-${i}" required />
+//   </div>
+//   `;
+// }
+
+function addButtonFields(i) {
+  buttonsList.insertAdjacentHTML('beforeend', `
+    <div class="form-group btn-group">
+      <label for="btnLabelInputEdit-${i}">Button ${i} Label:</label>
+      <input id="btnLabelInputEdit-${i}" type="text" name="buttonLabel-${i}" required />
+      <label for="btnLinkInputEdit-${i}">Button ${i} Link:</label>
+      <input id="btnLinkInputEdit-${i}" type="text" name="buttonLink-${i}" required />
+    </div>
+  `);
+}
+
+//////////////////////////////////
+/////   buttons collector    /////
+//////////////////////////////////
+
+function collectByPrefix(obj, prefix) {
+  return Object.entries(obj)
+    .filter(([key, value]) =>
+      key === prefix || key.startsWith(prefix + '-')
+    )
+    .sort(([a], [b]) => {
+      const na = parseInt(a.split('-')[1] || 0, 10);
+      const nb = parseInt(b.split('-')[1] || 0, 10);
+      return na - nb;
+    })
+    .map(([, value]) => value)
+    .filter(v => v !== '');
+}

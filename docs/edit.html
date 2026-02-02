@@ -41,13 +41,17 @@
         <input id="messageInputEdit" type="text" name="message" required />
       </div>
 
-      <div class="form-group btn-group">
-        <label for="btnLabelInputEdit">Button Label:</label>
-        <input id="btnLabelInputEdit" type="text" name="buttonLabel"/>
-        <label for="btnLinkInputEdit">Button Link:</label>
-        <input id="btnLinkInputEdit" type="text" name="buttonLink" required />
+      <div class="form-group" id="buttonsList">
+        <div class="form-group btn-group">
+          <label for="btnLabelInputEdit">Button Label:</label>
+          <input id="btnLabelInputEdit" type="text" name="buttonLabel" required />
+          <label for="btnLinkInputEdit">Button Link:</label>
+          <input id="btnLinkInputEdit" type="text" name="buttonLink" required />
+        </div>
       </div>
-
+      <div class="round-btn" id="addBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </div>
       <button type="submit" class="btn">Save</button>
     </form>
     <div class="message" id="msgEdit">message</div>

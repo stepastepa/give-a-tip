@@ -98,6 +98,20 @@ html {
   border: 1px solid var(--light-border-color-hover);
 }
 
+.round-btn {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  background-color: var(--light-border-color-hover);
+  color: var(--white);
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*//////////  Forms  //////////*/
 
 input, button, select, textarea {
@@ -113,8 +127,16 @@ input, button, select, textarea {
 }
 
 .form-group {
+  position: relative;
   display: grid;
   gap: 0.4rem;
+}
+
+.btn-group {
+    border: 2px solid var(--light-border-color-hover);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    position: relative;
 }
 
 .edit-card label,

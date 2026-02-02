@@ -60,3 +60,13 @@ body {
 .edit-card.incorrect label:has(#nameInputEdit) {
   color: crimson;
 }
+
+.form-group ~ .round-btn {
+  /* position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 47%);
+  z-index: 2; */
+  justify-self: center;
+  margin-top: -0.5rem;
+}
