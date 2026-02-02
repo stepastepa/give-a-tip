@@ -140,17 +140,6 @@ addBtn.addEventListener('click', () => {
   addButtonFields(i);
 });
 
-// function addButtonFields(i) {
-//   buttonsList.innerHTML += `
-//   <div class="form-group btn-group">
-//     <label for="btnLabelInputEdit-${i}">Button ${i} Label:</label>
-//     <input id="btnLabelInputEdit-${i}" type="text" name="buttonLabel-${i}"/>
-//     <label for="btnLinkInputEdit-${i}">Button ${i} Link:</label>
-//     <input id="btnLinkInputEdit-${i}" type="text" name="buttonLink-${i}" required />
-//   </div>
-//   `;
-// }
-
 function addButtonFields(i) {
   buttonsList.insertAdjacentHTML('beforeend', `
     <div class="form-group btn-group">
