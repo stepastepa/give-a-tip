@@ -124,7 +124,7 @@ async function loadProfile() {
       <div class="avatar">${avatarImg}</div>
       <h1>${data.name}</h1>
       <p>${data.message}</p>
-      ${buttonsHTML}
+      <div class="profile-btn-group">${buttonsHTML}</div>
     </div>
     <div class="button-container">
       <a class="light-btn close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
