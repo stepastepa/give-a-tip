@@ -88,8 +88,11 @@ body {
 }
 
 .profile-card .btn {
-  margin-bottom: -4.75rem;
   box-shadow: 0 0 0 0.5rem var(--white), 0 0 0 calc(0.5rem + 1px) var(--light-border-color);
+}
+
+.profile-card .btn:last-of-type {
+  margin-bottom: -4.75rem;
 }
 
 p.error {
