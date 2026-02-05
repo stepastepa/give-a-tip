@@ -22,7 +22,6 @@ import {
 
 const firebaseConfig = {
   apiKey: "AIzaSyB9ekJy28TCq-CsQh3fb0ibyIgPZbEIpxo",
-  
   authDomain: "give-a-tip.firebaseapp.com",
   projectId: "give-a-tip",
   storageBucket: "give-a-tip.firebasestorage.app",
@@ -63,9 +62,18 @@ async function loadProfile() {
   
   const data = dbSnapshot.docs[0].data();
 
+  /////////////////////////////////
   // data for button and QR code
-  let buttonLink = data.buttonLink || data.bankLink;
-  let buttonLabel = data.buttonLabel || "Give a Tip";
+  /////////////////////////////////
+
+  // let buttonLink = data.buttonLink[0] || data.bankLink;
+  // let buttonLabel = data.buttonLabel[0] || "Give a Tip";
+
+  let buttonsHTML = '';
+  
+  for (let i=0; i < data.buttonLabel.length; i++) {
+    buttonsHTML += `<a href="${data.buttonLink[i]}" target="_blank" class="btn">${data.buttonLabel[i]}</a>`;
+  }
 
   //////////////////////////////////////////////////////////////////////
   // default avatar generation
@@ -116,7 +124,7 @@ async function loadProfile() {
       <div class="avatar">${avatarImg}</div>
       <h1>${data.name}</h1>
       <p>${data.message}</p>
-      <a href="${buttonLink}" target="_blank" class="btn">${buttonLabel}</a>
+      ${buttonsHTML}
     </div>
     <div class="button-container">
       <a class="light-btn close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
@@ -131,7 +139,7 @@ async function loadProfile() {
     </div>
     <div class="qr-container">
       <canvas id="qrCode"></canvas>
-      <p>${buttonLink}</p>
+      <p>${data.buttonLink[0]}</p>
     </div>
   `;
 
