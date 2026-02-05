@@ -35,7 +35,7 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     // ищем данные сразу по uid
     const docRef = doc(db, 'couriers', user.uid);
-    const docSnap = await getDoc(docRef); // FirebaseError: Missing or insufficient permissions.
+    const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
