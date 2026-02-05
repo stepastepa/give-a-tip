@@ -95,6 +95,7 @@ body {
   position: absolute;
   bottom: 0;
   transform: translateY(calc(100% - 1.75rem));
+  padding-bottom: 1.5rem;
 }
 
 .profile-card .btn {
@@ -149,6 +150,7 @@ p.error {
     position: relative;
     bottom: revert;
     transform: revert;
+    padding-bottom: revert;
   }
 
   .button-container {
