@@ -145,8 +145,10 @@ p.error {
     margin-top: -9rem;
   }
   
-  .profile-card .btn {
-    margin-bottom: 0;
+  .profile-btn-group {
+    position: relative;
+    bottom: revert;
+    transform: revert;
   }
 
   .button-container {
