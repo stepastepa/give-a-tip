@@ -70,7 +70,7 @@ async function loadProfile() {
   // let buttonLabel = data.buttonLabel[0] || "Give a Tip";
 
   let buttonsHTML = '';
-  
+
   for (let i=0; i < data.buttonLabel.length; i++) {
     buttonsHTML += `<a href="${data.buttonLink[i]}" target="_blank" class="btn">${data.buttonLabel[i]}</a>`;
   }
@@ -144,7 +144,7 @@ async function loadProfile() {
   `;
 
   // QR code button setup
-  qrCodeButtonSetup(buttonLink);
+  qrCodeButtonSetup(data.buttonLink[0]);
 }
 
 loadProfile();
