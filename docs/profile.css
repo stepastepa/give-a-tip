@@ -150,7 +150,6 @@ p.error {
     position: relative;
     bottom: revert;
     transform: revert;
-    padding-bottom: revert;
   }
 
   .button-container {
