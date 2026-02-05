@@ -90,7 +90,8 @@ body {
 .profile-btn-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1.5rem;
   position: absolute;
   bottom: 0;
   transform: translateY(calc(100% - 1.75rem));
