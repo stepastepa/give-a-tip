@@ -98,6 +98,12 @@ body {
   padding-bottom: 1.5rem;
 }
 
+.profile-btn-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .profile-card .btn {
   box-shadow: 0 0 0 0.5rem var(--white), 0 0 0 calc(0.5rem + 1px) var(--light-border-color);
 }
@@ -150,12 +156,6 @@ p.error {
     position: relative;
     bottom: revert;
     transform: revert;
-  }
-
-  .profile-btn-row {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
   }
 
   .button-container {
