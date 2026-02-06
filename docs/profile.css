@@ -152,6 +152,12 @@ p.error {
     transform: revert;
   }
 
+  .profile-btn-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
   .button-container {
     position: relative;
     inset: auto;
