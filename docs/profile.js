@@ -72,7 +72,19 @@ async function loadProfile() {
   let buttonsHTML = '';
 
   for (let i=0; i < data.buttonLabel.length; i++) {
-    buttonsHTML += `<a href="${data.buttonLink[i]}" target="_blank" class="btn">${data.buttonLabel[i]}</a>`;
+    buttonsHTML += `
+    <div class="profile-btn-row">
+      <a href="${data.buttonLink[i]}" target="_blank" class="btn">${data.buttonLabel[i]}</a>
+      <div class="light-btn" id="qrCodeBtn_${[i]}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" fill="currentColor"></rect>
+          <rect x="14" y="3" width="7" height="7" fill="currentColor"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7" fill="currentColor"></rect>
+        </svg>
+      </div>
+    </div>
+    `;
   }
 
   //////////////////////////////////////////////////////////////////////
@@ -128,14 +140,6 @@ async function loadProfile() {
     </div>
     <div class="button-container">
       <a class="light-btn close" href="./index.html"><img src="./images/chevron-left.svg"><span>Back</span></a>
-      <div class="light-btn" id="qrCodeBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="7" height="7" fill="currentColor"></rect>
-          <rect x="14" y="3" width="7" height="7" fill="currentColor"></rect>
-          <rect x="14" y="14" width="7" height="7"></rect>
-          <rect x="3" y="14" width="7" height="7" fill="currentColor"></rect>
-        </svg>
-      </div>
     </div>
     <div class="qr-container">
       <canvas id="qrCode"></canvas>
@@ -228,7 +232,7 @@ function generateQRCode(xxx) {
 
 function qrCodeButtonSetup(bankLink) {
   let qrContainer = document.querySelector('.qr-container');
-  let qrCodeBtn = document.querySelector('#qrCodeBtn');
+  let qrCodeBtn = document.querySelector('#qrCodeBtn_1'); //////////////////////////////// !!!!!!!!!!!!
 
   qrCodeBtn.addEventListener('click', ()=>{
     if(!bankLink) return; // terminate if empty
