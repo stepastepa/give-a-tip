@@ -37,8 +37,6 @@ const db = getFirestore(app);
 ///////////////////////////////////
 ///////////////////////////////////
 
-let currentButtonLink = ''; // for QR code
-
 async function loadProfile() {
   const container = document.getElementById("profile");
 
@@ -145,7 +143,7 @@ async function loadProfile() {
     </div>
     <div class="qr-container">
       <canvas id="qrCode"></canvas>
-      <p>${currentButtonLink}</p>
+      <p></p>
     </div>
   `;
 
@@ -236,18 +234,20 @@ function generateQRCode(xxx) {
 
 function qrCodeButtonSetup(btnLinks) {
   let qrContainer = document.querySelector('.qr-container');
+  let qrLinkElement = document.querySelector('.qr-container p');
   
   for (let i=0; i < btnLinks.length; i++) {
     let qrCodeBtn = document.querySelector(`#qrCodeBtn_${i}`);
     
-    currentButtonLink = btnLinks[i];
-
     // show QR code
     qrCodeBtn.addEventListener('click', ()=>{
       if(!btnLinks) return; // terminate if empty
       generateQRCode(btnLinks[i]);
+      qrLinkElement.textContent = btnLinks[i];
       qrContainer.classList.add('active');
     });
+
+    
   }
 
   // hide QR code
