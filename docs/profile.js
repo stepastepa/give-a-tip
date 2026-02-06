@@ -37,6 +37,8 @@ const db = getFirestore(app);
 ///////////////////////////////////
 ///////////////////////////////////
 
+let currentButtonLink = ''; // for QR code
+
 async function loadProfile() {
   const container = document.getElementById("profile");
 
@@ -143,12 +145,14 @@ async function loadProfile() {
     </div>
     <div class="qr-container">
       <canvas id="qrCode"></canvas>
-      <p>${data.buttonLink[0]}</p>
+      <p>${currentButtonLink}</p>
     </div>
   `;
 
   // QR code button setup
-  qrCodeButtonSetup(data.buttonLink[0]);
+  qrCodeButtonSetup(data.buttonLink); /////////////////////////
+  //////////////////////////////////////////////////////////////// !!!!!!!!!!!!!!!!!!!!!
+  ////////////////////////////////////////////////////////////////
 }
 
 loadProfile();
@@ -230,19 +234,24 @@ function generateQRCode(xxx) {
   QR.generate(xxx);
 }
 
-function qrCodeButtonSetup(bankLink) {
+function qrCodeButtonSetup(btnLinks) {
   let qrContainer = document.querySelector('.qr-container');
-  let qrCodeBtn = document.querySelector('#qrCodeBtn_1'); //////////////////////////////// !!!!!!!!!!!!
+  
+  for (let i=0; i < btnLinks.length; i++) {
+    let qrCodeBtn = document.querySelector(`#qrCodeBtn_${i}`);
+    
+    currentButtonLink = btnLinks[i];
 
-  qrCodeBtn.addEventListener('click', ()=>{
-    if(!bankLink) return; // terminate if empty
-    generateQRCode(bankLink);
-    qrContainer.classList.add('active');
-    // profileData.classList.add('hidden');
-  });
+    // show QR code
+    qrCodeBtn.addEventListener('click', ()=>{
+      if(!btnLinks) return; // terminate if empty
+      generateQRCode(btnLinks[i]);
+      qrContainer.classList.add('active');
+    });
+  }
 
+  // hide QR code
   qrContainer.addEventListener('click', ()=>{
     qrContainer.classList.remove('active');
-    // profileData.classList.remove('hidden');
   });
 }
