@@ -66,9 +66,6 @@ async function loadProfile() {
   // data for button and QR code
   /////////////////////////////////
 
-  // let buttonLink = data.buttonLink[0] || data.bankLink;
-  // let buttonLabel = data.buttonLabel[0] || "Give a Tip";
-
   let buttonsHTML = '';
 
   for (let i=0; i < data.buttonLabel.length; i++) {
@@ -148,9 +145,7 @@ async function loadProfile() {
   `;
 
   // QR code button setup
-  qrCodeButtonSetup(data.buttonLink); /////////////////////////
-  //////////////////////////////////////////////////////////////// !!!!!!!!!!!!!!!!!!!!!
-  ////////////////////////////////////////////////////////////////
+  qrCodeButtonSetup(data.buttonLink);
 }
 
 loadProfile();
@@ -246,8 +241,6 @@ function qrCodeButtonSetup(btnLinks) {
       qrLinkElement.textContent = btnLinks[i];
       qrContainer.classList.add('active');
     });
-
-    
   }
 
   // hide QR code
