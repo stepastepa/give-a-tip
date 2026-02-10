@@ -28,7 +28,8 @@ function newSeed(xxx) {
 
 function seededRandom(yyy) {
   let seed = newSeed(yyy); 
-  return mulberry32(seed);
+  let x = mulberry32(seed);
+  return x();
 }
 
 export { seededRandom };

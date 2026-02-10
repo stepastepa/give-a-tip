@@ -114,8 +114,7 @@ async function loadProfile() {
   /////////////////
 
   let avaLetters = getTwoLetters(data.name);
-  let pseudoRandom = seededRandom(data.username); // username as seed for pseudo random function
-  let randomHUE = Math.floor(pseudoRandom() * 360); // pseudo random HUE based on username
+  let randomHUE = Math.floor(seededRandom(data.username) * 360); // pseudo random HUE based on username
   console.log(randomHUE);
 
   let avatarImg = `
