@@ -1,3 +1,5 @@
+import { seededRandom } from './seeded-random.js';
+
 const path = window.location.pathname;
 const username = path.split('/')[1]; // убираем "/" из строки "/username"
 console.log(username);
@@ -112,7 +114,10 @@ async function loadProfile() {
   /////////////////
 
   let avaLetters = getTwoLetters(data.name);
-  let randomHUE = Math.floor(Math.random() * 361);
+  let pseudoRandom = seededRandom(data.username); // username as seed for pseudo random function
+  let randomHUE = Math.floor(pseudoRandom() * 360); // pseudo random HUE based on username
+  console.log(randomHUE);
+
   let avatarImg = `
     <div style="background-color: hsl(${randomHUE}deg 25% 85%);">
       <span style="color: hsl(${randomHUE}deg 30% 50% / 0.75);">${avaLetters}</span>
