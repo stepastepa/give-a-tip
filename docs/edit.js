@@ -138,6 +138,7 @@ addBtn.addEventListener('click', () => {
   i++;
   console.log(`button field ${i}`);
   addButtonFields(i);
+  removeBtnSetup();
 });
 
 function addButtonFields(i) {
@@ -147,7 +148,7 @@ function addButtonFields(i) {
       <input id="btnLabelInputEdit-${i}" type="text" name="buttonLabel-${i}" required />
       <label for="btnLinkInputEdit-${i}">Button ${i} Link:</label>
       <input id="btnLinkInputEdit-${i}" type="text" name="buttonLink-${i}" required />
-      <div id="removeBtn-${i}" class="round-btn">
+      <div class="round-btn remove-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon-remove"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </div>
     </div>
@@ -157,10 +158,12 @@ function addButtonFields(i) {
 //////////////////////////////
 /////   remove button    /////
 //////////////////////////////
-for (let i=1; i<=buttonsList.children.length; i++) {
-  if (i>=2) {
-    document.querySelector(`#removeBtn-${i}`).addEventListener('click', () => {
-      document.querySelector(`#removeBtn-${i}`).parentElement.remove();
+function removeBtnSetup() {
+  let removeButtons = document.querySelectorAll('.remove-btn');
+
+  for (let i=0; i<removeButtons.length; i++) {
+    removeButtons[i].addEventListener('click', (e)=>{
+      e.currentTarget.closest('.btn-group').remove();
     });
   }
 }
