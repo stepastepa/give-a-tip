@@ -56,6 +56,7 @@ onAuthStateChanged(auth, async (user) => {
           document.querySelector(`#btnLabelInputEdit-${i}`).value = data.buttonLabel[i-1];
           document.querySelector(`#btnLinkInputEdit-${i}`).value = data.buttonLink[i-1];
         }
+        removeBtnSetup(); // add removing feature
       }
     } else {
       console.warn("Profile is missing");
@@ -138,7 +139,7 @@ addBtn.addEventListener('click', () => {
   i++;
   console.log(`button field ${i}`);
   addButtonFields(i);
-  removeBtnSetup();
+  removeBtnSetup(); // add removing feature
 });
 
 function addButtonFields(i) {
