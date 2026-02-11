@@ -47,14 +47,14 @@ onAuthStateChanged(auth, async (user) => {
       messageInputEdit.value = data.message || '';
 
       // first button setup
-      btnLabelInputEdit.value = data.buttonLabel[0] || '';
-      btnLinkInputEdit.value = data.buttonLink[0] || '';
+      document.querySelector('.btn-group input[name="buttonLabel"]').value = data.buttonLabel[0] || '';
+      document.querySelector('.btn-group input[name="buttonLink"]').value = data.buttonLink[0] || '';
       // generate html for additional buttons
       if (data.buttonLabel.length > 1) {
         for (let i = 2; i <= data.buttonLabel.length; i++) {
           addButtonFields(i);
-          document.querySelector(`#btnLabelInputEdit-${i}`).value = data.buttonLabel[i-1];
-          document.querySelector(`#btnLinkInputEdit-${i}`).value = data.buttonLink[i-1];
+          document.querySelector(`.btn-group input[name="buttonLabel-${i}"]`).value = data.buttonLabel[i-1];
+          document.querySelector(`.btn-group input[name="buttonLink-${i}"]`).value = data.buttonLink[i-1];
         }
         removeBtnSetup(); // add removing feature
         removeLoadingSkin();
@@ -146,10 +146,14 @@ addBtn.addEventListener('click', () => {
 function addButtonFields(i) {
   buttonsList.insertAdjacentHTML('beforeend', `
     <div class="form-group btn-group">
-      <label for="btnLabelInputEdit-${i}">Button ${i} Label:</label>
-      <input id="btnLabelInputEdit-${i}" type="text" name="buttonLabel-${i}" required />
-      <label for="btnLinkInputEdit-${i}">Button ${i} Link:</label>
-      <input id="btnLinkInputEdit-${i}" type="text" name="buttonLink-${i}" required />
+      <label>
+        <span>Button ${i} Label:</span>
+        <input type="text" name="buttonLabel-${i}" required />
+      </label>
+      <label>
+        <span>Button ${i} Link:</span>
+        <input type="text" name="buttonLink-${i}" required />
+      </label>
       <div class="round-btn remove-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon-remove"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </div>
@@ -166,7 +170,21 @@ function removeBtnSetup() {
   for (let i=0; i<removeButtons.length; i++) {
     removeButtons[i].addEventListener('click', (e)=>{
       e.currentTarget.closest('.btn-group').remove();
+      updateButtons();
     });
+  }
+}
+
+function updateButtons() {
+  let buttonsListArray = document.querySelectorAll('.btn-group');
+  for (let i=0; i < buttonsListArray.length; i++) {
+    if(i>=1) {
+      buttonsListArray[i].querySelectorAll('input')[0].setAttribute('name', `buttonLabel-${i+1}`);
+      buttonsListArray[i].querySelectorAll('input')[1].setAttribute('name', `buttonLink-${i+1}`);
+
+      buttonsListArray[i].querySelectorAll('span')[0].textContent = `Button ${i+1} Label:`;
+      buttonsListArray[i].querySelectorAll('span')[1].textContent = `Button ${i+1} Link:`;
+    }
   }
 }
 
