@@ -140,7 +140,7 @@ p.error {
     border-radius: 0;
     justify-content: flex-start;
     align-items: stretch;
-    width: 100vw;
+    width: 100%;
     padding-top: 4rem;
     padding-left: 1rem;
     padding-right: 1rem;
