@@ -77,3 +77,18 @@ body {
   top: 0;
   transform: translate(50%, 50%);
 }
+
+/*/////// loading skin ///////*/
+
+.edit-card.loading input {
+  border: none;
+  background-color: var(--light-bg);
+}
+
+.edit-card.loading label {
+  opacity: 0;
+}
+
+.edit-card .btn, .edit-card .round-btn {
+  display: none;
+}

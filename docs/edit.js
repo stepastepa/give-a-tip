@@ -57,6 +57,7 @@ onAuthStateChanged(auth, async (user) => {
           document.querySelector(`#btnLinkInputEdit-${i}`).value = data.buttonLink[i-1];
         }
         removeBtnSetup(); // add removing feature
+        removeLoadingSkin();
       }
     } else {
       console.warn("Profile is missing");
@@ -185,4 +186,12 @@ function collectByPrefix(obj, prefix) {
     })
     .map(([, value]) => value)
     .filter(v => v !== '');
+}
+
+/////////////////////////////
+/////   loading skin    /////
+/////////////////////////////
+
+function removeLoadingSkin() {
+  document.querySelector('.edit-card').classList.remove('loading');
 }
