@@ -89,6 +89,6 @@ body {
   opacity: 0;
 }
 
-.edit-card .btn, .edit-card .round-btn {
+.edit-card.loading .btn, .edit-card.loading .round-btn {
   display: none;
 }
