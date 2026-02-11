@@ -71,7 +71,7 @@ body {
   /* background-color: pink; */
 }
 
-@media (max-width: 400px) {
+@media (max-width: 414px) {
   body {
     padding: 0;
     align-items: flex-start;
