@@ -157,8 +157,13 @@ function addButtonFields(i) {
 //////////////////////////////
 /////   remove button    /////
 //////////////////////////////
-
-
+for (let i=1; i<=buttonsList.children.length; i++) {
+  if (i>=2) {
+    document.querySelector(`#removeBtn-${i}`).addEventListener('click', () => {
+      document.querySelector(`#removeBtn-${i}`).parentElement.remove();
+    });
+  }
+}
 
 //////////////////////////////////
 /////   buttons collector    /////
