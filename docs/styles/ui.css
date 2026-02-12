@@ -133,10 +133,20 @@ input, button, select, textarea {
 }
 
 .btn-group {
-    border: 2px solid var(--light-border-color-hover);
+    border: 1px solid var(--light-border-color-hover);
     border-radius: 0.75rem;
     padding: 1rem;
     position: relative;
+    background-color: var(--light-bg);
+    gap: 1rem;
+}
+.btn-group label {
+  position: relative;
+  display: grid;
+  gap: 0.4rem;
+}
+.btn-group input {
+  font-weight: 400;
 }
 
 .edit-card label,
