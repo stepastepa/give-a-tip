@@ -82,7 +82,7 @@ formReg.addEventListener('submit', async (e) => {
         msg = "This email is already used";
         break;
       case "auth/invalid-email":
-        msg = "Emsil is incorrect";
+        msg = "Emаil is incorrect";
         break;
       case "auth/weak-password":
         msg = "Password is too weak";

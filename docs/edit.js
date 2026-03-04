@@ -57,13 +57,14 @@ onAuthStateChanged(auth, async (user) => {
           document.querySelector(`.btn-group input[name="buttonLink-${i}"]`).value = data.buttonLink[i-1];
         }
         removeBtnSetup(); // add removing feature
-        removeLoadingSkin();
+        removeLoadingSkin(); // loading complete
       }
     } else {
       console.warn("Profile is missing");
       // создаём автоматический юзернейм из почты
       let autoUsername = user.email.split('@')[0];
       usernameInputEdit.value = autoUsername;
+      removeLoadingSkin(); // loading complete
     }
   } else {
     window.location.href = './login.html';
